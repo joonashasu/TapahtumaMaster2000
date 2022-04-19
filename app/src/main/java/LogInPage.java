@@ -1,3 +1,5 @@
+package com.example.tapahtumamaster2000;
+
 import java.util.Scanner;
 
 public class LogInPage {
