@@ -10,7 +10,7 @@ public class Transport {
     String startLocation;
     String endLocation;
 
-    public Transport getFastestRoute(){
+    //public Transport getFastestRoute(){
         //seeks fastest route to destination and returns it
-    }
+    //}
 }
