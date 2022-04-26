@@ -6,6 +6,8 @@ public class Venue {
     int ID;
     String name;
     String location;
+    String locationLat;
+    String locationLong;
     Date openHoursStart;
     Date openHoursEnd;
 
