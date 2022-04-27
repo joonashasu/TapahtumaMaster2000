@@ -127,7 +127,7 @@ public class BrowseScreen extends AppCompatActivity {
 
 
     }
-    //Toolbar functions under here
+    //Toolbar functions under here, from: https://guides.codepath.com/android/fragment-navigation-drawer
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
