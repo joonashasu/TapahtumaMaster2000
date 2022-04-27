@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.io.Serializable;
@@ -158,6 +159,7 @@ public class BrowseScreen extends AppCompatActivity {
                 break;
             case R.id.nav_log_out:
                 intent = new Intent(BrowseScreen.this, StartScreen.class);
+                Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 intent = new Intent(BrowseScreen.this, BrowseScreen.class);

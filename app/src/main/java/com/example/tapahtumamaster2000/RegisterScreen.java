@@ -116,7 +116,7 @@ public class RegisterScreen extends AppCompatActivity {
                 specialCharacter = true;
         }
 
-        if (lowerCase && UpperCase && digit && number && specialCharacter && pw.length() > 12) {
+        if (lowerCase && UpperCase && digit && specialCharacter && pw.length() > 12) {
             return true;
         } else {
             Toast.makeText(RegisterScreen.this, "Enter username and a password that matches the following requirement:\n " +

@@ -44,7 +44,7 @@ public class ProfileScreen extends AppCompatActivity {
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
         }
 
-        tName.setText(getString());
+        //tName.setText(getString());
 
 
 

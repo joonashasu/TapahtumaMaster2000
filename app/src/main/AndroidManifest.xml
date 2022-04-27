@@ -24,6 +24,9 @@
             android:name=".StartScreen"
             android:exported="true" />
         <activity
+            android:name=".ProfileScreen"
+            android:exported="true" />
+        <activity
             android:name=".BrowseScreen"
             android:exported="true">
             <intent-filter>
