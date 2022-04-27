@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class StartScreen extends AppCompatActivity {
@@ -49,11 +50,6 @@ public class StartScreen extends AppCompatActivity {
                 credentials.credentialLoader(sharedPreferencesMap);
             }
 
-            String savedUsername = sharedPreferences.getString("Username", "");
-            String savedPassword = sharedPreferences.getString("Password", "");
-            String savedLocation = sharedPreferences.getString("Location", "");
-        }
-
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,9 +71,10 @@ public class StartScreen extends AppCompatActivity {
                 }
             }
         });
-
     }
-        private boolean CheckCredentials (String username, String password){
+}
+
+    private boolean CheckCredentials (String username, String password){
             return credentials.CheckCredentials(username, password);
         }
 

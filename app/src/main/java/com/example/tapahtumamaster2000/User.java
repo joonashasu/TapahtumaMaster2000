@@ -11,7 +11,7 @@ public class User {
     int ID;
     String userName;
     String password;
-    BusStop location;
+    String location;
     ArrayList<Event> savedEvents = new ArrayList<Event>();
     String transportMode;
     String language;

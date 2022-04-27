@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +27,6 @@ public class RegisterScreen extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor sharedPreferencesEditor;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,7 @@ public class RegisterScreen extends AppCompatActivity {
 
             if(sharedPreferencesMap.size() != 0){
                 credentials.credentialLoader(sharedPreferencesMap);
+                credentials.locationLoader(sharedPreferencesMap);
             }
         }
 
@@ -66,9 +67,12 @@ public class RegisterScreen extends AppCompatActivity {
                         Toast.makeText(RegisterScreen.this, "Username already in use, please chose another one.", Toast.LENGTH_SHORT).show();
                     }else{
 
-                    credentials.addUser(inputUsername, inputPassword, inputLocation);
+                    credentials.addUser(inputUsername, inputPassword);
+                    credentials.addLocation(inputUsername, inputLocation);
 
+                    // Adding password and locations to username
                     sharedPreferencesEditor.putString(inputUsername, inputPassword);
+                    sharedPreferencesEditor.putString(inputUsername, inputLocation);
 
                     // Adding the new change to database
                     sharedPreferencesEditor.apply();
@@ -109,11 +113,10 @@ public class RegisterScreen extends AppCompatActivity {
         }
 
         if (lowerCase && UpperCase && digit && number && specialCharacter && pw.length() > 12) {
-            Toast.makeText(RegisterScreen.this, "Enter username and a password that matches the following requirement:\n " +
-                    "Password: Lowercase, upper, digit, special character", Toast.LENGTH_SHORT).show();
             return true;
         } else {
-            System.out.println("Password is too weak");
+            Toast.makeText(RegisterScreen.this, "Enter username and a password that matches the following requirement:\n " +
+                    "Password: Lowercase, upper, digit, special character", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
