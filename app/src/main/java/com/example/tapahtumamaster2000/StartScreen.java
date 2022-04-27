@@ -41,15 +41,15 @@ public class StartScreen extends AppCompatActivity {
 
         credentials = new Credentials();
 
-        if(sharedPreferences != null){
+        if (sharedPreferences != null) {
 
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
 
-            if(sharedPreferencesMap.size() != 0){
+            if (sharedPreferencesMap.size() != 0) {
                 credentials.credentialLoader(sharedPreferencesMap);
             }
 
-            String savedUsername = sharedPreferences.getString("Username",  "");
+            String savedUsername = sharedPreferences.getString("Username", "");
             String savedPassword = sharedPreferences.getString("Password", "");
         }
 
@@ -59,32 +59,30 @@ public class StartScreen extends AppCompatActivity {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-                if(username.isEmpty() || password.isEmpty()){
+                if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(StartScreen.this, "Please provide both a username and a password", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     validation = CheckCredentials(username, password);
-                    if(!validation){
+                    if (!validation) {
                         Toast.makeText(StartScreen.this, "Wrong username or password", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         Toast.makeText(StartScreen.this, "Successful login", Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent(StartScreen.this, HomePage.class);
+                        Intent intent = new Intent(StartScreen.this, BrowseScreen.class);
                         startActivity(intent);
                     }
                 }
             }
         });
 
-        bRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(StartScreen.this, RegisterScreen.class);
-                startActivity(intent);
-            }
-        });
     }
+        private boolean CheckCredentials (String username, String password){
+            return credentials.CheckCredentials(username, password);
+        }
 
-    private boolean CheckCredentials(String username, String password){
-        return credentials.CheckCredentials(username, password);
+
+    public void registerAcc(View v) {
+        Intent intent = new Intent(StartScreen.this, RegisterScreen.class);
+        startActivity(intent);
     }
 }

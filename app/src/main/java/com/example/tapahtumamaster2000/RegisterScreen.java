@@ -14,11 +14,11 @@ import java.util.Map;
 
 public class RegisterScreen extends AppCompatActivity {
 
-    final EditText etName = (EditText) findViewById(R.id.etPersonName);
-    final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-    final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-    final EditText etLocation = (EditText) findViewById(R.id.etLocation);
-    final Button bRegister = (Button) findViewById(R.id.bRegister);
+    EditText etName;
+    EditText etUsername;
+    EditText etPassword;
+    EditText etLocation;
+    Button bRegister;
 
     public Credentials credentials;
 
@@ -32,6 +32,11 @@ public class RegisterScreen extends AppCompatActivity {
         setContentView(R.layout.activity_register_screen);
 
         credentials = new Credentials();
+        etName = (EditText) findViewById(R.id.etPersonName);
+        etUsername = (EditText) findViewById(R.id.etUsername);
+        etPassword = (EditText) findViewById(R.id.etPassword);
+        etLocation = (EditText) findViewById(R.id.etLocation);
+        bRegister = (Button) findViewById(R.id.bRegister);
 
         sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
         sharedPreferencesEditor = sharedPreferences.edit();
