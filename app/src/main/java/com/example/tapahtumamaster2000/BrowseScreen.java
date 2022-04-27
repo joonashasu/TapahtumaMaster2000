@@ -51,11 +51,14 @@ public class BrowseScreen extends AppCompatActivity {
         Event e = new Event();
         saveButton = (Button) findViewById(R.id.checkEventButton);
 
+
+        //Toolbar functions under here:
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        setupDrawerContent(nvDrawer);
 
 
         new Thread(new Runnable() {
@@ -123,9 +126,8 @@ public class BrowseScreen extends AppCompatActivity {
 
 
     }
-
+    //Toolbar functions under here
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawer.openDrawer(GravityCompat.START);
@@ -133,6 +135,41 @@ public class BrowseScreen extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        Intent intent;
+        switch(menuItem.getItemId()) {
+            case R.id.nav_browsing_screen:
+                intent = new Intent(BrowseScreen.this, BrowseScreen.class);
+                break;
+            case R.id.nav_user_profile:
+                intent = new Intent(BrowseScreen.this, ProfileScreen.class);
+                break;
+            case R.id.nav_log_out:
+                intent = new Intent(BrowseScreen.this, StartScreen.class);
+                break;
+            default:
+                intent = new Intent(BrowseScreen.this, BrowseScreen.class);
+        }
+
+
+        startActivity(intent);
+        menuItem.setChecked(true);
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        mDrawer.closeDrawers();
     }
 
     public void searchButtonClick(View v){
