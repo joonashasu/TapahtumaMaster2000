@@ -7,11 +7,17 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.*;
 import org.json.JSONException;
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,11 +33,15 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner;
     Context context = this;
     CountDownLatch latch = new CountDownLatch(1);
+    TextView eventDetails;
+    Button saveButton;
+    ArrayList<Event> mainList = new ArrayList<Event>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Event e = new Event();
+        saveButton = (Button) findViewById(R.id.saveButton);
 
         new Thread(new Runnable() {
             @Override
@@ -55,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         for (int j = 0; j < e.allEvents.size(); j++){
             String name = e.allEvents.get(j).name;
             spList.add(name);
+            mainList.add(e.allEvents.get(j));
             System.out.println(spList.get(j).toString());
         }
         System.out.println("Pituus"+ spList.size());
@@ -64,8 +75,25 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(aa);
         System.out.println("Populated");
 
+        eventDetails = (TextView) findViewById(R.id.eventDetails);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView,
+                                       View selectedItemView, int position, long id){
+                for(int i = 0; i < e.allEvents.size(); i++){
+                    if(spinner.getSelectedItem().toString().equals(e.allEvents.get(i).name)){
+                        Event selected = e.allEvents.get(i);
+                        String formatted = e.formatDetails(selected);
+                        eventDetails.setText(formatted);
+                    }
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
 
 
     }
@@ -80,6 +108,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public void saveButtonClick(View v){
+        User u = new User();
+        for(int i = 0; i < mainList.size(); i++) {
+            if (spinner.getSelectedItem().toString().equals(mainList.get(i).name)) {
+                Event selected = mainList.get(i);
+                u.saveEvent(selected);
+            }
+        }
+        System.out.println("läpi");
+    }
+
 }
 
 

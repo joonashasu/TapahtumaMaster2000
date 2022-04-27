@@ -38,6 +38,16 @@ public class Event {
     URL url;
 
     ArrayList<Event> allEvents = new ArrayList<Event>();
+    private static Event single_instance = null;
+
+    public static Event getInstance(){
+        {
+            if (single_instance == null)
+                single_instance = new Event();
+
+            return single_instance;
+        }
+    }
 
     public String getJSON() throws IOException {
         Event[] list = null;
@@ -144,6 +154,14 @@ public class Event {
 
         //return
     //}
+    public String formatDetails(Event e){
+        String formatted = ("Name: "+e.name+"\n\n"
+                +"Location: "+e.venue.location+"\n\n"
+                +"Price: "+e.price+"\n\n"
+                +"Description: "+e.description+"\n\n"
+                +"Url: "+e.url);
+        return formatted;
+    }
 
     public String getPrice(){
         return price;

@@ -12,7 +12,7 @@ public class User {
     String userName;
     String password;
     BusStop location;
-    ArrayList<Event> savedEvents;
+    ArrayList<Event> savedEvents = new ArrayList<Event>();
     String transportMode;
     String language;
     double moneyUsed;
@@ -97,13 +97,12 @@ public class User {
         u.password = pass;
     }
 
-    public void saveEvent(User u, Event ev) {
-        if (u.savedEvents.size() == 0) {
+    public void saveEvent(Event ev) {
 
-        } else {
-            u.savedEvents.add(ev);
-            System.out.println("Event added");
-        }
+        savedEvents.add(ev);
+        System.out.println("Event added");
+        System.out.println(savedEvents.get(0));
+
     }
 
     public void deleteEvent(User u, Event ev) {
