@@ -19,7 +19,8 @@
             android:exported="false" />
         <activity
             android:name=".StartScreen"
-            android:exported="false" />
+            android:exported="true" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
