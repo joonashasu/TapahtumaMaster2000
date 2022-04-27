@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.MessageDigest;
+
 public class User {
     int ID;
     String userName;
@@ -50,6 +53,40 @@ public class User {
         }
     }
 
+    public void encodePassword(User u, String pass) {
+
+        String encodedPass = null;
+
+        if (testPassword(pass) == true) {
+
+            // Password encrypting to hash
+            try {
+                // Chosing hasg algorithm
+                MessageDigest pw = MessageDigest.getInstance("MD5");
+
+                // Adding original password bytes to MessageDigest
+                pw.update(pass.getBytes());
+
+                // Transforming from hash to bytes
+                byte[] bytes = pw.digest();
+
+                // Transforming bytes from desimal form to hexadesimal
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < bytes.length; i++) {
+                    sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                }
+
+                // Encoded hash password in hexadesimals
+                encodedPass = sb.toString();
+
+            } catch (NoSuchAlgorithmException a) {
+                a.printStackTrace();
+            }
+            u.password = pass;
+        }
+
+    }
+
     public void changeLocation(BusStop b, User u) {
         // changes the desired BusStop where user's trips start
         u.location = b;
@@ -92,7 +129,6 @@ public class User {
                 System.out.println("No such user exists");
             }
         }
-
     }
 
     public User CreateAccount() {
