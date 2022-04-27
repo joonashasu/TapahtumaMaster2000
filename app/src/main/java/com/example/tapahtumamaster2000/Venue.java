@@ -1,8 +1,9 @@
 package com.example.tapahtumamaster2000;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Venue {
+public class Venue implements Serializable {
     int ID;
     String name;
     String location;

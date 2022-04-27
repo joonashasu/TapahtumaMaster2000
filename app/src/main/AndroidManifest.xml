@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TapahtumaMaster2000">
         <activity
+            android:name=".EventScreen"
+            android:exported="false" />
+        <activity
             android:name=".HomePage"
             android:exported="false" />
         <activity
@@ -20,7 +23,6 @@
         <activity
             android:name=".StartScreen"
             android:exported="true" />
-
         <activity
             android:name=".BrowseScreen"
             android:exported="true">

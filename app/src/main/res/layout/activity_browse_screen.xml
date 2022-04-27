@@ -29,28 +29,45 @@
         app:layout_constraintVertical_bias="0.06" />
 
     <Button
-        android:id="@+id/saveButton"
-        android:layout_width="113dp"
-        android:layout_height="111dp"
+        android:id="@+id/checkEventButton"
+        android:layout_width="394dp"
+        android:layout_height="44dp"
         android:layout_marginTop="341dp"
-        android:onClick="saveButtonClick"
-        android:text="Save Event!"
+        android:onClick="goToEvent"
+        android:text="Go to the Event page!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.946"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/eventDetails"
+        app:layout_constraintVertical_bias="0.005" />
+
+    <ImageButton
+        android:id="@+id/searchButton"
+        android:layout_width="53dp"
+        android:layout_height="82dp"
+        android:layout_marginStart="296dp"
+        android:layout_marginBottom="34dp"
+        android:layout_weight="1"
+        android:src="@android:drawable/ic_menu_search"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/textInputLayout"
+        android:layout_width="296dp"
+        android:layout_height="56dp"
         app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="hint" />

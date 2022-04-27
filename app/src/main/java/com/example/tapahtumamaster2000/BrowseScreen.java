@@ -3,14 +3,17 @@ package com.example.tapahtumamaster2000;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import java.io.Serializable;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.*;
 
 import java.io.IOException;
@@ -25,13 +28,17 @@ public class BrowseScreen extends AppCompatActivity {
     CountDownLatch latch = new CountDownLatch(1);
     TextView eventDetails;
     Button saveButton;
+    ImageButton searchButton;
+    TextInputEditText searchBar;
     ArrayList<Event> mainList = new ArrayList<Event>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_screen);
         Event e = new Event();
-        saveButton = (Button) findViewById(R.id.saveButton);
+        saveButton = (Button) findViewById(R.id.checkEventButton);
+        searchBar = (TextInputEditText) findViewById(R.id.searchBar);
+        searchButton = (ImageButton) findViewById(R.id.searchButton);
 
         new Thread(new Runnable() {
             @Override
@@ -99,6 +106,25 @@ public class BrowseScreen extends AppCompatActivity {
 
     }
 
+    public void searchButtonClick(View v){
+        String criteria = searchBar.getText().toString();
+        List<String> spList = new ArrayList<String>();
+        Event e;
+        if (criteria == null){
+
+        }else{
+            for(int j = 0; j < mainList.size(); j++){
+
+                if(mainList.get(j).name.contains(criteria)){
+                    String name = mainList.get(j).name;
+                    spList.add(name);
+                    System.out.println(spList.get(j).toString());
+                }
+            }
+        }
+
+    }
+
     public void saveButtonClick(View v){
         User u = new User();
         for(int i = 0; i < mainList.size(); i++) {
@@ -108,6 +134,35 @@ public class BrowseScreen extends AppCompatActivity {
             }
         }
         System.out.println("läpi");
+    }
+
+    public Event getSelected(){
+        Event event = null;
+        for(int i = 0; i < mainList.size(); i++) {
+            if (spinner.getSelectedItem().toString().equals(mainList.get(i).name)) {
+                Event selected = mainList.get(i);
+
+                return selected;
+            }
+            else{
+                return event;
+            }
+        }
+
+        return event;
+    }
+
+    public void goToEvent(View v){
+        Intent intent1 = new Intent(BrowseScreen.this, EventScreen.class);
+        Event selected;
+        for(int i = 0; i < mainList.size(); i++) {
+            if (spinner.getSelectedItem().toString().equals(mainList.get(i).name)) {
+                selected = mainList.get(i);
+                intent1.putExtra("sample", selected);
+                startActivity(intent1);
+            }
+        }
+
     }
 
 }
