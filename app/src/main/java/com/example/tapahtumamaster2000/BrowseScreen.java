@@ -1,10 +1,14 @@
 package com.example.tapahtumamaster2000;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +16,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+
 import java.io.Serializable;
+
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.*;
 
@@ -31,14 +39,24 @@ public class BrowseScreen extends AppCompatActivity {
     ImageButton searchButton;
     TextInputEditText searchBar;
     ArrayList<Event> mainList = new ArrayList<Event>();
+
+    private DrawerLayout mDrawer;
+    private androidx.appcompat.widget.Toolbar toolbar;
+    private NavigationView nvDrawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_screen);
         Event e = new Event();
         saveButton = (Button) findViewById(R.id.checkEventButton);
-        searchBar = (TextInputEditText) findViewById(R.id.searchBar);
-        searchButton = (ImageButton) findViewById(R.id.searchButton);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
 
         new Thread(new Runnable() {
             @Override
@@ -104,6 +122,17 @@ public class BrowseScreen extends AppCompatActivity {
     public void populateSpinner(){
 
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawer.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void searchButtonClick(View v){

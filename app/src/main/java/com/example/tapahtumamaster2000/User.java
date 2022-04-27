@@ -87,7 +87,7 @@ public class User {
 
     }
 
-    public void changeLocation(BusStop b, User u) {
+    public void changeLocation(String b, User u) {
         // changes the desired BusStop where user's trips start
         u.location = b;
     }
