@@ -51,8 +51,6 @@ public class RegisterScreen extends AppCompatActivity {
 
             if(sharedPreferencesMap.size() != 0){
                 credentials.credentialLoader(sharedPreferencesMap);
-                credentials.locationLoader(sharedPreferencesMap);
-                credentials.nameLoader(sharedPreferencesMap);
             }
         }
 
@@ -73,13 +71,12 @@ public class RegisterScreen extends AppCompatActivity {
 
                     // Adding inputs to hashmaps
                     credentials.addUser(inputUsername, inputPassword);
-                    credentials.addLocation(inputUsername, inputLocation);
-                    credentials.addName(inputUsername, inputName);
 
                     // Adding name, password and location to database
                     sharedPreferencesEditor.putString(inputUsername, inputPassword);
-                    sharedPreferencesEditor.putString(inputUsername, inputLocation);
-                    sharedPreferencesEditor.putString(inputUsername, inputName);
+                    sharedPreferencesEditor.putString("LoginUsername", inputUsername);
+                    sharedPreferencesEditor.putString("LoginLocation", inputLocation);
+                    sharedPreferencesEditor.putString("LoginName", inputName);
 
                     // Adding the new change to database
                     sharedPreferencesEditor.apply();
@@ -89,9 +86,16 @@ public class RegisterScreen extends AppCompatActivity {
                     startActivity(intent);
                     }
                 }
-
             }
         });
+    }
+
+    public EditText getEtLocation() {
+        return etLocation;
+    }
+
+    public EditText getEtName() {
+        return etName;
     }
 
     private boolean CheckCredentials(String un, String pw) {
@@ -114,7 +118,7 @@ public class RegisterScreen extends AppCompatActivity {
                 UpperCase = true;
             if (Character.isDigit(i))
                 digit = true;
-            if (!m.matches())
+            if (m.find())
                 specialCharacter = true;
         }
 

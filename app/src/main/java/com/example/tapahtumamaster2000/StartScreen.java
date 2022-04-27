@@ -23,6 +23,7 @@ public class StartScreen extends AppCompatActivity {
 
     boolean validation = false;
     public Credentials credentials;
+    public RegisterScreen register;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor sharedPreferencesEditor;
@@ -65,6 +66,13 @@ public class StartScreen extends AppCompatActivity {
                     } else {
                         Toast.makeText(StartScreen.this, "Successful login", Toast.LENGTH_SHORT).show();
 
+                        sharedPreferencesEditor.putString("LoginUsername", username);
+                        sharedPreferencesEditor.putString("LoginPassword", password);
+                        sharedPreferencesEditor.putString("LoginLocation", register.getEtLocation().toString());
+                        sharedPreferencesEditor.putString("LoginName", register.getEtName().toString());
+
+                        sharedPreferencesEditor.apply();
+
                         Intent intent = new Intent(StartScreen.this, BrowseScreen.class);
                         startActivity(intent);
                     }
@@ -73,11 +81,9 @@ public class StartScreen extends AppCompatActivity {
         });
     }
 }
-
     private boolean CheckCredentials (String username, String password){
             return credentials.CheckCredentials(username, password);
         }
-
 
     public void registerAcc(View v) {
         Intent intent = new Intent(StartScreen.this, RegisterScreen.class);

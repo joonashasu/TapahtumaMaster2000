@@ -35,7 +35,7 @@ public class ProfileScreen extends AppCompatActivity {
         bUploadImage = (Button) findViewById(R.id.bUploadImage);
         bChangePassword = (Button) findViewById(R.id.bChangePassword);
         bChangeLocation = (Button) findViewById(R.id.bChangeLocation);
-        String name, username, location;
+        String name, username, password, location;
 
         sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
 
@@ -43,15 +43,11 @@ public class ProfileScreen extends AppCompatActivity {
 
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
 
-            if(sharedPreferencesMap.size() != 0){
-                credentials.credentialLoader(sharedPreferencesMap);
-                credentials.locationLoader(sharedPreferencesMap);
-                credentials.nameLoader(sharedPreferencesMap);
-            }
 
-            name = sharedPreferences.getString("name", "");
-            username = sharedPreferences.getString("username", "");
-            location = sharedPreferences.getString("location", "");
+            name = sharedPreferences.getString("LoginName", "");
+            username = sharedPreferences.getString("LoginUsername", "");
+            password = sharedPreferences.getString("LoginPassword", "");
+            location = sharedPreferences.getString("LoginLocation", "");
 
             tName.setText(name);
             tUsername.setText(username);

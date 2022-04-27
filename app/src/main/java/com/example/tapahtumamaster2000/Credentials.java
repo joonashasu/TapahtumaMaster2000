@@ -35,6 +35,7 @@ public class Credentials{
         }
         return false;
     }
+
     public void credentialLoader (Map<String, ?> preferencesMap){
         for(Map.Entry<String, ?> entries: preferencesMap.entrySet()){
             credentialsHashmap.put(entries.getKey(), entries.getValue().toString());
