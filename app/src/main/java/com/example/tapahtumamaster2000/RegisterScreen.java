@@ -50,6 +50,7 @@ public class RegisterScreen extends AppCompatActivity {
             if(sharedPreferencesMap.size() != 0){
                 credentials.credentialLoader(sharedPreferencesMap);
                 credentials.locationLoader(sharedPreferencesMap);
+                credentials.nameLoader(sharedPreferencesMap);
             }
         }
 
@@ -57,6 +58,7 @@ public class RegisterScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String inputName = etName.getText().toString();
                 String inputUsername = etUsername.getText().toString();
                 String inputPassword = etPassword.getText().toString();
                 String inputLocation = etLocation.getText().toString();
@@ -69,10 +71,12 @@ public class RegisterScreen extends AppCompatActivity {
 
                     credentials.addUser(inputUsername, inputPassword);
                     credentials.addLocation(inputUsername, inputLocation);
+                    credentials.addName(inputUsername, inputName);
 
-                    // Adding password and locations to username
+                    // Adding name, password and location to database
                     sharedPreferencesEditor.putString(inputUsername, inputPassword);
                     sharedPreferencesEditor.putString(inputUsername, inputLocation);
+                    sharedPreferencesEditor.putString(inputUsername, inputName);
 
                     // Adding the new change to database
                     sharedPreferencesEditor.apply();
@@ -108,7 +112,7 @@ public class RegisterScreen extends AppCompatActivity {
                 UpperCase = true;
             if (Character.isDigit(i))
                 digit = true;
-            if (m.find(i))
+            if (!m.matches())
                 specialCharacter = true;
         }
 

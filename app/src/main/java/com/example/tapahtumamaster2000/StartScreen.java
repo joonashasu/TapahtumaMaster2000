@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class StartScreen extends AppCompatActivity {
-    Context context = this;
+
     private EditText etUsername;
     private EditText etPassword;
     private Button bLogin;

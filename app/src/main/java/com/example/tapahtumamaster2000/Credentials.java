@@ -8,6 +8,8 @@ public class Credentials{
 
     private HashMap<String, String> credentialsHashmap = new HashMap<String, String>();
     private HashMap<String, String> locationsHashmap = new HashMap<String, String>();
+    private HashMap<String, String> nameHashmap = new HashMap<String, String>();
+
 
     public void addUser(String username, String password){
         credentialsHashmap.put(username, password);
@@ -15,6 +17,9 @@ public class Credentials{
 
     public void addLocation(String username, String location){
         locationsHashmap.put(username, location);
+    }
+    public void addName(String username, String name){
+        locationsHashmap.put(username, name);
     }
 
     public boolean CheckUsername(String username){
@@ -39,6 +44,12 @@ public class Credentials{
     public void locationLoader(Map<String, ?> locationMap ) {
         for(Map.Entry<String, ?> entries: locationMap.entrySet()){
             locationsHashmap.put(entries.getKey(), entries.getValue().toString());
+        }
+    }
+
+    public void nameLoader(Map<String, ?> locationMap ) {
+        for(Map.Entry<String, ?> entries: locationMap.entrySet()){
+            nameHashmap.put(entries.getKey(), entries.getValue().toString());
         }
     }
 }
