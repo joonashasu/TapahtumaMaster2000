@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.progressindicator.BaseProgressIndicator;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -69,6 +71,7 @@ public class RegisterScreen extends AppCompatActivity {
                         Toast.makeText(RegisterScreen.this, "Username already in use, please chose another one.", Toast.LENGTH_SHORT).show();
                     }else{
 
+                    // Adding inputs to hashmaps
                     credentials.addUser(inputUsername, inputPassword);
                     credentials.addLocation(inputUsername, inputLocation);
                     credentials.addName(inputUsername, inputName);
@@ -91,12 +94,11 @@ public class RegisterScreen extends AppCompatActivity {
         });
     }
 
-    private boolean CheckCredentials(String un, String pw){
+    private boolean CheckCredentials(String un, String pw) {
 
         boolean lowerCase = false;
         boolean UpperCase = false;
         boolean digit = false;
-        boolean number = false;
         boolean specialCharacter = false;
 
         // Special character specifier

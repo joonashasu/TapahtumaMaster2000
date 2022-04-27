@@ -21,8 +21,8 @@ public class ProfileScreen extends AppCompatActivity {
     private Button bChangePassword;
     private Button bChangeLocation;
 
+    public Credentials credentials;
     SharedPreferences sharedPreferences;
-    SharedPreferences.Editor sharedPreferencesEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +35,27 @@ public class ProfileScreen extends AppCompatActivity {
         bUploadImage = (Button) findViewById(R.id.bUploadImage);
         bChangePassword = (Button) findViewById(R.id.bChangePassword);
         bChangeLocation = (Button) findViewById(R.id.bChangeLocation);
+        String name, username, location;
 
         sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
-        sharedPreferencesEditor = sharedPreferences.edit();
 
-        if (sharedPreferences != null) {
+        if(sharedPreferences != null){
 
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
+
+            if(sharedPreferencesMap.size() != 0){
+                credentials.credentialLoader(sharedPreferencesMap);
+                credentials.locationLoader(sharedPreferencesMap);
+                credentials.nameLoader(sharedPreferencesMap);
+            }
+
+            name = sharedPreferences.getString("name", "");
+            username = sharedPreferences.getString("username", "");
+            location = sharedPreferences.getString("location", "");
+
+            tName.setText(name);
+            tUsername.setText(username);
+            tLocation.setText(location);
         }
-
-        //tName.setText(getString());
-
-
-
-
-
     }
 }
