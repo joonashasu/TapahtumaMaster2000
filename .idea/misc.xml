@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/joona/AndroidStudioProjects/TapahtumaMaster2000/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/sakar/OneDrive - LUT University/LUT IEM vuosi 2/Olio-ohjelmointi (Java)/Olio HT Android Studio/app/src/main/res/layout/activity_home_page.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/sakar/OneDrive - LUT University/LUT IEM vuosi 2/Olio-ohjelmointi (Java)/Olio HT Android Studio/app/src/main/res/layout/activity_main.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/sakar/OneDrive - LUT University/LUT IEM vuosi 2/Olio-ohjelmointi (Java)/Olio HT Android Studio/app/src/main/res/layout/activity_register_screen.xml" value="0.2" />
+        <entry key="..\:/Users/sakar/OneDrive - LUT University/LUT IEM vuosi 2/Olio-ohjelmointi (Java)/Olio HT Android Studio/app/src/main/res/layout/activity_start_screen.xml" value="0.2" />
       </map>
     </option>
   </component>

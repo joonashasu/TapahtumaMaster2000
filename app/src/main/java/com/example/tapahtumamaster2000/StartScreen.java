@@ -30,10 +30,12 @@ public class StartScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {    // Login to already existing account
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
+
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         bLogin = (Button) findViewById(R.id.bLogin);
         bRegister = (Button) findViewById(R.id.bLogin);
+
         sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
         sharedPreferencesEditor = sharedPreferences.edit();
 
