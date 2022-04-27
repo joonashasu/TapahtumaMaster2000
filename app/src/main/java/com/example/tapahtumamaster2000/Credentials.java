@@ -7,7 +7,7 @@ public class Credentials{
 
     HashMap<String, String> credetialsHashmap = new HashMap<String, String>();
 
-    public void addUser(String username, String password){
+    public void addUser(String username, String password, String location){
         credetialsHashmap.put(username, password);
     }
 

@@ -51,6 +51,7 @@ public class StartScreen extends AppCompatActivity {
 
             String savedUsername = sharedPreferences.getString("Username", "");
             String savedPassword = sharedPreferences.getString("Password", "");
+            String savedLocation = sharedPreferences.getString("Location", "");
         }
 
         bLogin.setOnClickListener(new View.OnClickListener() {

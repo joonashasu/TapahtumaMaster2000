@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterScreen extends AppCompatActivity {
 
@@ -56,6 +58,7 @@ public class RegisterScreen extends AppCompatActivity {
 
                 String inputUsername = etUsername.getText().toString();
                 String inputPassword = etPassword.getText().toString();
+                String inputLocation = etLocation.getText().toString();
 
                 if(CheckCredentials(inputUsername,inputPassword)){
 
@@ -63,7 +66,7 @@ public class RegisterScreen extends AppCompatActivity {
                         Toast.makeText(RegisterScreen.this, "Username already in use, please chose another one.", Toast.LENGTH_SHORT).show();
                     }else{
 
-                    credentials.addUser(inputUsername, inputPassword );
+                    credentials.addUser(inputUsername, inputPassword, inputLocation);
 
                     sharedPreferencesEditor.putString(inputUsername, inputPassword);
 
@@ -82,11 +85,36 @@ public class RegisterScreen extends AppCompatActivity {
 
     private boolean CheckCredentials(String un, String pw){
 
-        if(un.isEmpty() || pw.length() < 12){
-            Toast.makeText(RegisterScreen.this, "Enter username and a password longer than 12 characters", Toast.LENGTH_SHORT).show();
-            return false;
-        }else {
+        boolean lowerCase = false;
+        boolean UpperCase = false;
+        boolean digit = false;
+        boolean number = false;
+        boolean specialCharacter = false;
+
+        // Special character specifier
+        Pattern p = Pattern.compile("[^A-Za-z0-9 ]");
+        Matcher m = p.matcher(pw);
+
+        // Goes through password characters by character and checks if it meets the
+        // requirements
+        for (char i : pw.toCharArray()) {
+            if (Character.isLowerCase(i))
+                lowerCase = true;
+            if (Character.isUpperCase(i))
+                UpperCase = true;
+            if (Character.isDigit(i))
+                digit = true;
+            if (m.find(i))
+                specialCharacter = true;
+        }
+
+        if (lowerCase && UpperCase && digit && number && specialCharacter && pw.length() > 12) {
+            Toast.makeText(RegisterScreen.this, "Enter username and a password that matches the following requirement:\n " +
+                    "Password: Lowercase, upper, digit, special character", Toast.LENGTH_SHORT).show();
             return true;
+        } else {
+            System.out.println("Password is too weak");
+            return false;
         }
     }
 
