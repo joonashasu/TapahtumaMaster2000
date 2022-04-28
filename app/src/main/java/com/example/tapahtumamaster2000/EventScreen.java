@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.w3c.dom.Text;
 
@@ -23,6 +24,7 @@ public class EventScreen extends AppCompatActivity {
     TextView eventName;
     TextView eventLocation;
     TextView eventPrice;
+    TextInputEditText comment;
     private DrawerLayout mDrawer;
     private androidx.appcompat.widget.Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -42,6 +44,7 @@ public class EventScreen extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
 
+        comment = (TextInputEditText) findViewById(R.id.comment);
         descScrollView = (ScrollView) findViewById(R.id.descScrollView);
         eventName = (TextView) findViewById(R.id.eventName);
         eventLocation = (TextView) findViewById(R.id.eventLocation);
@@ -72,6 +75,10 @@ public class EventScreen extends AppCompatActivity {
     public void saveEvent(View v){
         Intent i = getIntent();
         Event event = (Event) i.getSerializableExtra("sample");
+        User u = new User();
+        String cm = comment.getText().toString();
+
+        u.saveEvent(event, cm);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

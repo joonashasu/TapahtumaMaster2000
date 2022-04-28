@@ -1,5 +1,13 @@
 package com.example.tapahtumamaster2000;
 
+import android.content.Context;
+import android.util.Log;
+
+import androidx.annotation.MainThread;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -16,6 +24,7 @@ public class User {
     String transportMode;
     String language;
     double moneyUsed;
+    Context context;
 
     ArrayList<User> users;
 
@@ -97,11 +106,23 @@ public class User {
         u.password = pass;
     }
 
-    public void saveEvent(Event ev) {
+    public void saveEvent(Event ev, String comment) {
+        context = context.getApplicationContext();
+        String user =
+        String fileName = user+".txt";
+        try {
+            OutputStreamWriter ow = new OutputStreamWriter(context.openFileOutput(), Context.MODE_PRIVATE);
 
-        savedEvents.add(ev);
-        System.out.println("Event added");
-        System.out.println(savedEvents.get(0));
+
+            String s = ev.ID + ";" + ev.name + ";" + comment;
+
+            ow.append(s);
+        } catch(IOException e){
+            Log.e("IOException","Error in input");
+        } catch(FileNotFoundException e){
+            Log.e("FileNotFoundException","File Not Found");
+        }
+
 
     }
 
