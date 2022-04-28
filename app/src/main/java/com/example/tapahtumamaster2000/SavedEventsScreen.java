@@ -28,7 +28,11 @@ public class SavedEventsScreen extends AppCompatActivity {
     Button backbutton;
     SharedPreferences sharedPreferences;
     public Credentials credentials;
+    TextView moneyUsed;
     ArrayList<String> comments = new ArrayList<String>();
+    int totalcost;
+
+    //https://stackoverflow.com/questions/3496269/how-do-i-put-a-border-around-an-android-textview borders for tv:s
 
 
 
@@ -42,6 +46,7 @@ public class SavedEventsScreen extends AppCompatActivity {
         yourEvents = (TextView) findViewById(R.id.textView2);
         commenttv = (TextView) findViewById(R.id.commenttv);
         backbutton = (Button) findViewById(R.id.backToUserSceen);
+        moneyUsed = (TextView) findViewById(R.id.moneyUsed);
         StartScreen ss = new StartScreen();
         sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
         String currentUserName = "";
@@ -54,6 +59,9 @@ public class SavedEventsScreen extends AppCompatActivity {
         }
 
         showListedEvents(currentUserName);
+        System.out.println(totalcost);
+        String money = "Your saved events cost a total of "+totalcost+"€.";
+        moneyUsed.setText(money);
 
         savedEventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -84,11 +92,15 @@ public class SavedEventsScreen extends AppCompatActivity {
             System.out.println("try sisäl");
             System.out.println(name);
             String s = "";
+            totalcost = 0;
 
             while ((s=br.readLine())!=null){
                 String[] help = s.split(";");
                 s = help[1];
                 comments.add(help[2]);
+                String helpString = help[3];
+                int addable = Integer.parseInt(helpString);
+                totalcost = totalcost + addable;
                 System.out.println(s);
                 list.add(s);
 

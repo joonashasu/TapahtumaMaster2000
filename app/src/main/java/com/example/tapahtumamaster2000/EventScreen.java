@@ -1,5 +1,6 @@
 package com.example.tapahtumamaster2000;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
@@ -75,6 +77,39 @@ public class EventScreen extends AppCompatActivity {
         eventPrice.setText(priceString);
 
 
+        comment.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    saveEvent(v);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawer, toolbar, R.string.home_navigation_drawer_open, R.string.home_navigation_drawer_close) {
+
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+            }
+        };
+        mDrawer.addDrawerListener(toggle);
+        toggle.syncState();
 
     }
 
@@ -100,12 +135,21 @@ public class EventScreen extends AppCompatActivity {
             String fileName = user+".txt";
             System.out.println("/////////////"+user);
             OutputStreamWriter ow = new OutputStreamWriter(context.openFileOutput(fileName, MODE_APPEND));
+            if (cm.equals("")){
+                cm = "No comment added";
+            }
+            String price;
+            String[] priceHelp = event.price.split("-");
+            price = priceHelp[1].replace("€", "");
+            if(price.equals("null")){
+                price = "0";
+            }
 
-
-            String s = event.ID + ";" + event.name + ";" + cm;
+            String s = event.ID + ";" + event.name + ";" + cm+";"+price+"\n";
             System.out.println(s);
             ow.append(s);
             ow.close();
+            Toast.makeText(this, "Event added successfully!", Toast.LENGTH_SHORT).show();
         } catch(IOException e){
             Log.e("IOException","Error in input");
         }

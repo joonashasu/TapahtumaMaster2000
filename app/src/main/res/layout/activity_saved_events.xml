@@ -8,25 +8,26 @@
 
     <ListView
         android:id="@+id/savedeventslist"
-        android:layout_width="414dp"
-        android:layout_height="253dp"
+        android:layout_width="405dp"
+        android:layout_height="143dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.418" />
+        app:layout_constraintVertical_bias="0.322" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="360dp"
         android:layout_height="54dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/back"
         android:text="Your Saved Events:"
+        android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/_dynamic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.686"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.764" />
@@ -48,9 +49,27 @@
         android:id="@+id/commenttv"
         android:layout_width="372dp"
         android:layout_height="124dp"
+        android:background="@drawable/back"
+        android:text="Click on an event to see your comment!"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/savedeventslist"
+        app:layout_constraintVertical_bias="0.145" />
+
+    <TextView
+        android:id="@+id/moneyUsed"
+        android:layout_width="360dp"
+        android:layout_height="71dp"
+        android:background="@drawable/back"
         android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/savedeventslist" />
+        app:layout_constraintTop_toBottomOf="@+id/commenttv" />
 </androidx.constraintlayout.widget.ConstraintLayout>

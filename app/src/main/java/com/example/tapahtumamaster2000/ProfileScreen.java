@@ -1,5 +1,6 @@
 package com.example.tapahtumamaster2000;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -63,6 +64,27 @@ public class ProfileScreen extends AppCompatActivity {
         bChangePassword = (Button) findViewById(R.id.bChangePassword);
         bChangeLocation = (Button) findViewById(R.id.bChangeLocation);
         String name, username, location;
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawer, toolbar, R.string.home_navigation_drawer_open, R.string.home_navigation_drawer_close) {
+
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+            }
+        };
+        mDrawer.addDrawerListener(toggle);
+        toggle.syncState();
 
         sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
         sharedPreferencesEditor = sharedPreferences.edit();
