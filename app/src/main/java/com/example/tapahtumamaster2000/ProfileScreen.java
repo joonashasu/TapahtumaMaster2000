@@ -67,24 +67,23 @@ public class ProfileScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String password;
                 etPassword1 = (EditText) findViewById(R.id.etPassword1);
                 etPassword2 = (EditText) findViewById(R.id.etPassword2);
 
-                password = sharedPreferences.getString("LoginPassword", "");
+                String password = sharedPreferences.getString("LoginPassword", "");
 
                 String newPassword1 = etPassword1.getText().toString();
                 String newPassword2 = etPassword2.getText().toString();
 
-                if(newPassword1.equals(newPassword2) && newPassword1 != password){
+                if(newPassword1.equals(newPassword2) && !newPassword1.equals(password)){
                     Toast.makeText(ProfileScreen.this, "Passwords changed successfully", Toast.LENGTH_SHORT).show();
-                    sharedPreferencesEditor.putString("LoginUsername", newPassword1);
-                }else if (newPassword1.equals(newPassword2) && newPassword1 == password) {
+                    sharedPreferencesEditor.putString("LoginPassword", newPassword1);
+                    sharedPreferencesEditor.apply();
+                }else if (newPassword1.equals(newPassword2) && newPassword1.equals(password)) {
                     Toast.makeText(ProfileScreen.this, "Passwords already in use", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(ProfileScreen.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                 }
-                sharedPreferencesEditor.apply();
             }
         });
 
@@ -97,7 +96,6 @@ public class ProfileScreen extends AppCompatActivity {
 
                 Toast.makeText(ProfileScreen.this, "Location changed successfully", Toast.LENGTH_SHORT).show();
                 sharedPreferencesEditor.putString("LoginLocation", newLocation);
-
                 sharedPreferencesEditor.apply();
             }
         });

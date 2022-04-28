@@ -49,6 +49,8 @@ public class StartScreen extends AppCompatActivity {
 
             if (sharedPreferencesMap.size() != 0) {
                 credentials.credentialLoader(sharedPreferencesMap);
+                credentials.locationLoader(sharedPreferencesMap);    // Lisäys
+                credentials.nameLoader(sharedPreferencesMap);       // Lisäys
             }
 
         bLogin.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +83,22 @@ public class StartScreen extends AppCompatActivity {
         });
     }
 }
+    public String getEtUsername() {
+
+        if (sharedPreferences != null) {
+
+            Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
+
+            if (sharedPreferencesMap.size() != 0) {
+                credentials.credentialLoader(sharedPreferencesMap);
+            }
+
+            String currentUserName = sharedPreferences.getString("LoginUsername", "");
+            return currentUserName;
+        }
+        return "Error";
+    }
+
     private boolean CheckCredentials (String username, String password){
             return credentials.CheckCredentials(username, password);
         }
