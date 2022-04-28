@@ -96,7 +96,10 @@ public class StartScreen extends AppCompatActivity {
             String currentUserName = sharedPreferences.getString("LoginUsername", "");
             return currentUserName;
         }
-        return "Error";
+        else{
+            return "Error";
+        }
+
     }
 
     private boolean CheckCredentials (String username, String password){

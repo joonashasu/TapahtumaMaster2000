@@ -231,16 +231,6 @@ public class BrowseScreen extends AppCompatActivity {
 
     }
 
-    public void saveButtonClick(View v){
-        User u = new User();
-        for(int i = 0; i < mainList.size(); i++) {
-            if (eventList.getSelectedItem().toString().equals(mainList.get(i).name)) {
-                Event selected = mainList.get(i);
-                u.saveEvent(selected);
-            }
-        }
-        System.out.println("läpi");
-    }
 
     public Event getChosenEvent(){
         Event event = null;

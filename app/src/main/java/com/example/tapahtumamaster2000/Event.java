@@ -132,11 +132,11 @@ public class Event implements Serializable {
                     event.url = new URL(urlHelp);
 
                     //event.name = jObj.get("descriptions").toString();
-                    System.out.println("//////////////////////////////");
+                    //System.out.println("//////////////////////////////");
                     allEvents.add(event);
-                    System.out.println(event.ID+" "+event.name+" "+event.duration+" "+event.price+" "+event.venue.location+" ");
-                    System.out.println(event.description);
-                    System.out.println(event.url.toString());
+                    //System.out.println(event.ID+" "+event.name+" "+event.duration+" "+event.price+" "+event.venue.location+" ");
+                    //System.out.println(event.description);
+                    //System.out.println(event.url.toString());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

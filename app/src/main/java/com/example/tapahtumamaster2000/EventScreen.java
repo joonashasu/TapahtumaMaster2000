@@ -5,8 +5,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
@@ -16,7 +19,9 @@ import android.widget.Toast;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.w3c.dom.Text;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Map;
 
 public class EventScreen extends AppCompatActivity {
     ScrollView descScrollView;
@@ -28,6 +33,9 @@ public class EventScreen extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private androidx.appcompat.widget.Toolbar toolbar;
     private NavigationView nvDrawer;
+    Context context = null;
+    SharedPreferences sharedPreferences;
+    public Credentials credentials;
 
 
 
@@ -43,6 +51,9 @@ public class EventScreen extends AppCompatActivity {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
+        context = EventScreen.this;
+        sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
+
 
         comment = (TextInputEditText) findViewById(R.id.comment);
         descScrollView = (ScrollView) findViewById(R.id.descScrollView);
@@ -55,7 +66,7 @@ public class EventScreen extends AppCompatActivity {
         tv = new TextView(this);
         tv.setText(event.description.toString());
         descScrollView.addView(tv);
-        System.out.println(event.description);
+        //System.out.println(event.description);
         String nameString = "Name: "+event.name;
         eventName.setText(nameString);
         String locationString = "Location: "+event.venue.location;
@@ -77,9 +88,31 @@ public class EventScreen extends AppCompatActivity {
         Event event = (Event) i.getSerializableExtra("sample");
         User u = new User();
         String cm = comment.getText().toString();
+        String currentUserName = "jorma";
+        if (sharedPreferences != null) {
 
-        u.saveEvent(event, cm);
+            Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
+            //credentials.credentialLoader(sharedPreferencesMap);
+            currentUserName = sharedPreferences.getString("LoginUsername", "");
+        }
+        try {
+            String user = currentUserName;
+            String fileName = user+".txt";
+            System.out.println("/////////////"+user);
+            OutputStreamWriter ow = new OutputStreamWriter(context.openFileOutput(fileName, MODE_APPEND));
+
+
+            String s = event.ID + ";" + event.name + ";" + cm;
+            System.out.println(s);
+            ow.append(s);
+            ow.close();
+        } catch(IOException e){
+            Log.e("IOException","Error in input");
+        }
+
+
     }
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

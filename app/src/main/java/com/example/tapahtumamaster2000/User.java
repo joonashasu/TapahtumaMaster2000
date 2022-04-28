@@ -1,6 +1,9 @@
 package com.example.tapahtumamaster2000;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.MainThread;
@@ -9,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -24,9 +28,10 @@ public class User {
     String transportMode;
     String language;
     double moneyUsed;
-    Context context;
-
     ArrayList<User> users;
+
+    public Credentials credentials;
+    SharedPreferences sharedPreferences;
 
     public boolean testPassword(String pw) {
 
@@ -106,21 +111,32 @@ public class User {
         u.password = pass;
     }
 
-    public void saveEvent(Event ev, String comment) {
-        context = context.getApplicationContext();
-        String user =
-        String fileName = user+".txt";
+    public void saveEvent(Event ev, String comment, Context context) {
+        //context = context.getApplicationContext();
+        sharedPreferences = context.getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
+        String currentUserName = "";
+        if (sharedPreferences != null) {
+
+            Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
+
+            if (sharedPreferencesMap.size() != 0) {
+                credentials.credentialLoader(sharedPreferencesMap);
+            }
+
+            currentUserName = sharedPreferences.getString("LoginUsername", "");
+        }
         try {
-            OutputStreamWriter ow = new OutputStreamWriter(context.openFileOutput(), Context.MODE_PRIVATE);
+            String user = currentUserName;
+            String fileName = user+".txt";
+            System.out.println("/////////////"+user);
+            OutputStreamWriter ow = new OutputStreamWriter(context.openFileOutput(fileName, MODE_PRIVATE));
 
 
             String s = ev.ID + ";" + ev.name + ";" + comment;
-
+            System.out.println(s);
             ow.append(s);
         } catch(IOException e){
             Log.e("IOException","Error in input");
-        } catch(FileNotFoundException e){
-            Log.e("FileNotFoundException","File Not Found");
         }
 
 
