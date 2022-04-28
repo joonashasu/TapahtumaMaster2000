@@ -44,7 +44,7 @@ public class ProfileScreen extends AppCompatActivity {
         bUploadImage = (Button) findViewById(R.id.bUploadImage);
         bChangePassword = (Button) findViewById(R.id.bChangePassword);
         bChangeLocation = (Button) findViewById(R.id.bChangeLocation);
-        String name, username, password, location;
+        String name, username, location;
 
         sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
         sharedPreferencesEditor = sharedPreferences.edit();
@@ -56,7 +56,6 @@ public class ProfileScreen extends AppCompatActivity {
 
             name = sharedPreferences.getString("LoginName", "");
             username = sharedPreferences.getString("LoginUsername", "");
-            password = sharedPreferences.getString("LoginPassword", "");
             location = sharedPreferences.getString("LoginLocation", "");
 
             tName.setText(name);
@@ -67,9 +66,12 @@ public class ProfileScreen extends AppCompatActivity {
         bChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String password;
                 etPassword1 = (EditText) findViewById(R.id.etPassword1);
                 etPassword2 = (EditText) findViewById(R.id.etPassword2);
 
+                password = sharedPreferences.getString("LoginPassword", "");
 
                 String newPassword1 = etPassword1.getText().toString();
                 String newPassword2 = etPassword2.getText().toString();
