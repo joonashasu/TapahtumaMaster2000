@@ -156,11 +156,11 @@ public class Event implements Serializable {
         //return
     //}
     public String formatDetails(Event e){
-        String formatted = ("Name: "+e.name+"\n\n"
-                +"Location: "+e.venue.location+"\n\n"
-                +"Price: "+e.price+"\n\n"
-                +"Description: "+e.description+"\n\n"
-                +"Url: "+e.url);
+        String formatted = (e.name+"\n"
+                +"Location: "+e.venue.location+"\n"
+                +"Price: "+e.price+"\n"
+                +"Description: "+e.description+"\n");
+
         return formatted;
     }
 

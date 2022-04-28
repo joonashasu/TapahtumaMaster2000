@@ -34,6 +34,7 @@
                 android:layout_height="64dp"
                 android:onClick="goBack"
                 android:text="Back to browsing" />
+
         </FrameLayout>
     </LinearLayout>
 
@@ -44,9 +45,22 @@
     tools:context=".EventScreen">
 
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/saveButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descScrollView">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add your comment here!" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <ScrollView
+        <ScrollView
         android:id="@+id/descScrollView"
         android:layout_width="369dp"
         android:layout_height="195dp"
@@ -96,18 +110,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.923" />
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="284dp"
-        android:layout_height="56dp"
-        android:onClick="saveEvent"
-        android:text="Add to your Events!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descScrollView"
-        app:layout_constraintVertical_bias="0.105" />
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="284dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="100sp"
+            android:onClick="saveEvent"
+            android:text="Add to your Events!"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.125"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descScrollView"
+            app:layout_constraintVertical_bias="0.105" />
 
 
 

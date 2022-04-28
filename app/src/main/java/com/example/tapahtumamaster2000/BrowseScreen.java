@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,18 +34,21 @@ import java.util.concurrent.CountDownLatch;
 
 public class BrowseScreen extends AppCompatActivity {
     View v;
-    Spinner spinner;
     Context context = this;
     CountDownLatch latch = new CountDownLatch(1);
     TextView eventDetails;
     Button saveButton;
     ImageButton searchButton;
     TextInputEditText searchBar;
+    ListView eventList;
+    SearchView SV;
     ArrayList<Event> mainList = new ArrayList<Event>();
 
     private DrawerLayout mDrawer;
     private androidx.appcompat.widget.Toolbar toolbar;
     private NavigationView nvDrawer;
+
+    public String clicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,8 @@ public class BrowseScreen extends AppCompatActivity {
         setContentView(R.layout.activity_browse_screen);
         Event e = new Event();
         saveButton = (Button) findViewById(R.id.checkEventButton);
+        eventList = (ListView) findViewById(R.id.eventList);
+        SV = (SearchView) findViewById(R.id.searchView);
 
 
         //Toolbar functions under here:
@@ -88,33 +95,64 @@ public class BrowseScreen extends AppCompatActivity {
             System.out.println(spList.get(j).toString());
         }
         System.out.println("Pituus"+ spList.size());
-        ArrayAdapter<String> aa = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, spList);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner =(Spinner) findViewById(R.id.spinner);
-        spinner.setAdapter(aa);
+        ArrayAdapter<String> aa = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, spList);
+        eventList.setAdapter(aa);
         System.out.println("Populated");
 
         eventDetails = (TextView) findViewById(R.id.eventDetails);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        SV.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parentView,
-                                       View selectedItemView, int position, long id){
-                for(int i = 0; i < e.allEvents.size(); i++){
-                    if(spinner.getSelectedItem().toString().equals(e.allEvents.get(i).name)){
-                        Event selected = e.allEvents.get(i);
+            public boolean onQueryTextSubmit(String s) {
+                String searchable = SV.getQuery().toString();
+                System.out.println(searchable);
+                spList.clear();
+                    for (int i = 0; i < e.allEvents.size(); i++) {
+                        if (e.allEvents.get(i).name.contains(searchable)) {
+                            spList.add(e.allEvents.get(i).name);
+                        }
+                        else if (e.allEvents.get(i).venue.location.contains(searchable)) {
+                            spList.add(e.allEvents.get(i).name);
+                        }
+                        else if (e.allEvents.get(i).description.contains(searchable)) {
+                            spList.add(e.allEvents.get(i).name);
+                        }
+                    }
+                    ArrayAdapter<String> aa = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, spList);
+                    eventList.setAdapter(aa);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+
+
+        eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedString = eventList.getItemAtPosition(i).toString();
+                for(int k = 0; k < e.allEvents.size(); k++){
+                    if(selectedString.equals(e.allEvents.get(k).name)){
+                        Event selected = e.allEvents.get(k);
                         String formatted = e.formatDetails(selected);
                         eventDetails.setText(formatted);
                     }
                 }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
 
 
+
+
+
+    }
+    public Context getActivity(){
+        return BrowseScreen.this;
     }
 
 
@@ -196,7 +234,7 @@ public class BrowseScreen extends AppCompatActivity {
     public void saveButtonClick(View v){
         User u = new User();
         for(int i = 0; i < mainList.size(); i++) {
-            if (spinner.getSelectedItem().toString().equals(mainList.get(i).name)) {
+            if (eventList.getSelectedItem().toString().equals(mainList.get(i).name)) {
                 Event selected = mainList.get(i);
                 u.saveEvent(selected);
             }
@@ -204,32 +242,32 @@ public class BrowseScreen extends AppCompatActivity {
         System.out.println("läpi");
     }
 
-    public Event getSelected(){
+    public Event getChosenEvent(){
         Event event = null;
+        String helpString = eventDetails.getText().toString();
+        String[] hsar = helpString.split("\n");
+        helpString = hsar[0];
+
         for(int i = 0; i < mainList.size(); i++) {
-            if (spinner.getSelectedItem().toString().equals(mainList.get(i).name)) {
+            if (helpString.equals(mainList.get(i).name)) {
                 Event selected = mainList.get(i);
+                System.out.println(selected.name);
 
                 return selected;
             }
-            else{
-                return event;
+
             }
-        }
+
 
         return event;
     }
 
     public void goToEvent(View v){
         Intent intent1 = new Intent(BrowseScreen.this, EventScreen.class);
-        Event selected;
-        for(int i = 0; i < mainList.size(); i++) {
-            if (spinner.getSelectedItem().toString().equals(mainList.get(i).name)) {
-                selected = mainList.get(i);
-                intent1.putExtra("sample", selected);
-                startActivity(intent1);
-            }
-        }
+        Event selected = getChosenEvent();
+        intent1.putExtra("sample", selected);
+        startActivity(intent1);
+
 
     }
 

@@ -23,15 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <FrameLayout
-            android:id="@+id/flContent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" >
-
-        </FrameLayout>
-
-
 
         <!-- The main content view where fragments are loaded -->
     </LinearLayout>
@@ -45,38 +36,33 @@
         tools:context=".BrowseScreen">
 
 
-
-
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="407dp"
-            android:layout_height="50dp"
-            android:elevation="0sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="416dp"
+            android:layout_height="78dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/eventList"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.124" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/eventDetails"
-            android:layout_width="381dp"
-            android:layout_height="317dp"
-            android:text="Event's text here"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <ListView
+            android:id="@+id/eventList"
+            android:layout_width="415dp"
+            android:layout_height="319dp"
+            android:layout_marginTop="120dp"
+            app:layout_constraintBottom_toTopOf="@+id/eventDetails"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.466"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner"
-            app:layout_constraintVertical_bias="0.06" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ListView>
 
         <Button
             android:id="@+id/checkEventButton"
             android:layout_width="394dp"
             android:layout_height="44dp"
-            android:layout_marginTop="341dp"
+            android:layout_marginTop="140dp"
             android:onClick="goToEvent"
             android:text="Go to the Event page!"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -85,6 +71,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/eventDetails"
             app:layout_constraintVertical_bias="0.005" />
+
+        <TextView
+            android:id="@+id/eventDetails"
+            android:layout_width="404dp"
+            android:layout_height="135dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="80dp"
+            android:text="Click on an event to see details here!"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventList" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
