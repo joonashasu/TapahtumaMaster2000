@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.progressindicator.BaseProgressIndicator;
@@ -24,6 +25,7 @@ public class RegisterScreen extends AppCompatActivity {
     EditText etPassword;
     EditText etLocation;
     Button bRegister;
+    ImageButton ibBack;
 
     public Credentials credentials;
 
@@ -41,6 +43,7 @@ public class RegisterScreen extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         etLocation = (EditText) findViewById(R.id.etLocation);
         bRegister = (Button) findViewById(R.id.bRegister);
+        ibBack = (ImageButton) findViewById((R.id.ibBack));
 
         sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
         sharedPreferencesEditor = sharedPreferences.edit();
@@ -86,6 +89,14 @@ public class RegisterScreen extends AppCompatActivity {
                     startActivity(intent);
                     }
                 }
+            }
+        });
+
+        ibBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterScreen.this, StartScreen.class);
+                startActivity(intent);
             }
         });
     }

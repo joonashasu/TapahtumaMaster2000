@@ -92,7 +92,7 @@ public class ProfileScreen extends AppCompatActivity {
         if(sharedPreferences != null){
 
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
-
+            credentials.credentialLoader(sharedPreferencesMap);
 
             name = sharedPreferences.getString("LoginName", "");
             username = sharedPreferences.getString("LoginUsername", "");
@@ -110,16 +110,21 @@ public class ProfileScreen extends AppCompatActivity {
                 etPassword1 = (EditText) findViewById(R.id.etPassword1);
                 etPassword2 = (EditText) findViewById(R.id.etPassword2);
 
-                String password = sharedPreferences.getString("LoginPassword", "");
+                if(sharedPreferences != null) {
+                    Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
+                    credentials.credentialLoader(sharedPreferencesMap);
+                }
 
+                String username = sharedPreferences.getString("LoginUsername", "");
+                String oldPassword = sharedPreferences.getString("LoginPassword", "");
                 String newPassword1 = etPassword1.getText().toString();
                 String newPassword2 = etPassword2.getText().toString();
 
-                if(newPassword1.equals(newPassword2) && !newPassword1.equals(password)){
+                if(newPassword1.equals(newPassword2) && !newPassword1.equals(oldPassword)){
                     Toast.makeText(ProfileScreen.this, "Passwords changed successfully", Toast.LENGTH_SHORT).show();
-                    sharedPreferencesEditor.putString("LoginPassword", newPassword1);
+                    sharedPreferencesEditor.putString(username, newPassword1);
                     sharedPreferencesEditor.apply();
-                }else if (newPassword1.equals(newPassword2) && newPassword1.equals(password)) {
+                }else if (newPassword1.equals(newPassword2) && newPassword1.equals(oldPassword)) {
                     Toast.makeText(ProfileScreen.this, "Passwords already in use", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(ProfileScreen.this, "Passwords do not match", Toast.LENGTH_SHORT).show();

@@ -49,8 +49,6 @@ public class StartScreen extends AppCompatActivity {
 
             if (sharedPreferencesMap.size() != 0) {
                 credentials.credentialLoader(sharedPreferencesMap);
-                credentials.locationLoader(sharedPreferencesMap);    // Lisäys
-                credentials.nameLoader(sharedPreferencesMap);       // Lisäys
             }
 
         bLogin.setOnClickListener(new View.OnClickListener() {

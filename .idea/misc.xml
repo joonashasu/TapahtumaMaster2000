@@ -4,17 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/joona/AndroidStudioProjects/TapahtumaMaster2000/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/drawable/back.xml" value="0.165" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/layout/activity_browse_screen.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/layout/activity_event_screen.xml" value="0.22" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/layout/activity_home_page.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/layout/activity_profile_screen.xml" value="0.11684782608695653" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/layout/activity_register_screen.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/layout/activity_saved_events.xml" value="0.22" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/layout/activity_start_screen.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/layout/toolbar.xml" value="0.11684782608695653" />
-        <entry key="..\:/Users/joona/StudioProjects/TapahtumaMaster2000/app/src/main/res/menu/drawer_view.xml" value="0.1796875" />
+        <entry key="..\:/Users/sakar/OneDrive - LUT University/LUT IEM vuosi 2/Olio-ohjelmointi (Java)/Olio HT Android Studio/app/src/main/res/layout/activity_home_page.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/sakar/OneDrive - LUT University/LUT IEM vuosi 2/Olio-ohjelmointi (Java)/Olio HT Android Studio/app/src/main/res/layout/activity_main.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/sakar/OneDrive - LUT University/LUT IEM vuosi 2/Olio-ohjelmointi (Java)/Olio HT Android Studio/app/src/main/res/layout/activity_profile_screen.xml" value="0.2" />
+        <entry key="..\:/Users/sakar/OneDrive - LUT University/LUT IEM vuosi 2/Olio-ohjelmointi (Java)/Olio HT Android Studio/app/src/main/res/layout/activity_register_screen.xml" value="0.2" />
+        <entry key="..\:/Users/sakar/OneDrive - LUT University/LUT IEM vuosi 2/Olio-ohjelmointi (Java)/Olio HT Android Studio/app/src/main/res/layout/activity_start_screen.xml" value="0.2" />
+        <entry key="..\:/Users/sakar/OneDrive - LUT University/LUT IEM vuosi 2/Olio-ohjelmointi (Java)/Olio HT Android Studio/app/src/main/res/layout/toolbar.xml" value="0.2259963768115942" />
       </map>
     </option>
   </component>
