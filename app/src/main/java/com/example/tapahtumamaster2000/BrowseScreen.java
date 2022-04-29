@@ -179,10 +179,6 @@ public class BrowseScreen extends AppCompatActivity {
     }
 
 
-    public void readJSON(View v) {
-        Gson gson = new Gson();
-
-    }
 
     public void populateSpinner(){
 

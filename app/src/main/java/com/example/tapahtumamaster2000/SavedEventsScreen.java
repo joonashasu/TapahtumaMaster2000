@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -31,6 +32,10 @@ public class SavedEventsScreen extends AppCompatActivity {
     TextView moneyUsed;
     ArrayList<String> comments = new ArrayList<String>();
     int totalcost;
+
+    String selected = "";
+
+    public static SavedEventsScreen sesInstance = null;
 
     //https://stackoverflow.com/questions/3496269/how-do-i-put-a-border-around-an-android-textview borders for tv:s
 
@@ -63,22 +68,44 @@ public class SavedEventsScreen extends AppCompatActivity {
         String money = "Your saved events cost a total of "+totalcost+"€.";
         moneyUsed.setText(money);
 
+
         savedEventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedString = savedEventsList.getItemAtPosition(i).toString();
                 for(int k = 0; k <savedEventsList.getCount() ; k++){
                     commenttv.setText(comments.get(i));
+                    selected = selectedString;
                 }
 
             }
         });
+    }
+    public String getcurrent(){
+        String currentUserName = "";
+
+        if (sharedPreferences != null) {
+
+            Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
+            currentUserName = sharedPreferences.getString("LoginUsername", "");
+        }
+        return currentUserName;
+    }
+
+    public String getSelected(){
+        return selected;
     }
 
 
     public void backToUserScreen(View v){
         Intent intent1 = new Intent(SavedEventsScreen.this, ProfileScreen.class);
         startActivity(intent1);
+    }
+    public static SavedEventsScreen getInstance(){
+        if (sesInstance == null) {
+            sesInstance = new SavedEventsScreen();
+        }
+        return sesInstance;
     }
 
     public void showListedEvents(String name){
@@ -115,5 +142,25 @@ public class SavedEventsScreen extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void deleteEvent(View v){
+        String selectedString = getSelected();
+
+        if (selectedString == ""){
+            Toast.makeText(this, "No event selected", Toast.LENGTH_SHORT).show();
+        } else {
+            User u = new User();
+            String username = getcurrent();
+            Context context = getContext();
+            u.deleteEvent(username, selectedString, context);
+            showListedEvents(username);
+        }
+    }
+
+
+    public Context getContext(){
+        Context context = getApplicationContext();
+        return context;
     }
 }

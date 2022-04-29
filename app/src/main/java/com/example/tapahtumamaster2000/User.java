@@ -2,13 +2,20 @@ package com.example.tapahtumamaster2000;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.MainThread;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -32,6 +39,7 @@ public class User {
 
     public Credentials credentials;
     SharedPreferences sharedPreferences;
+
 
     public boolean testPassword(String pw) {
 
@@ -142,16 +150,46 @@ public class User {
 
     }
 
-    public void deleteEvent(User u, Event ev) {
+    public void deleteEvent(String un, String ename, Context context) {
+        //SavedEventsScreen ses = SavedEventsScreen.getInstance();
+        //Context context = ses.getApplicationContext();
         // seeks the position of desired event and deletes it from list
-        for (int i = 0; i < savedEvents.size(); i++) {
-            if (ev.ID == savedEvents.get(i).ID) {
-                savedEvents.remove(i);
-                System.out.println("Event deleted");
-                break;
+
+        try {
+            //help gotten from https://stackoverflow.com/questions/5800603/delete-specific-line-from-java-text-file
+            System.out.println(context.getFilesDir()+"/"+un+".txt");
+            File inputFile = new File(context.getFilesDir()+"/"+un+".txt");
+            File tempFile = new File(context.getFilesDir()+"/temp.txt");
+
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+            String currentLine;
+
+            while((currentLine = reader.readLine()) != null) {
+                // trim newline when comparing with lineToRemove
+                String trimmedLine = currentLine.trim();
+                if(trimmedLine.contains(ename)) continue;
+                writer.write(currentLine + System.getProperty("line.separator"));
             }
+            writer.close();
+            reader.close();
+            boolean successful = tempFile.renameTo(inputFile);
+            Toast.makeText(context, "Event deleted!", Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e){
+            Log.e("FileNotFoundException","eilöyvy");
         }
+        catch(IOException e){
+
+            Log.e("IOException","Error in input");
+
+        }
+
+
     }
+
+
+
 
     public void logIn(String un, String pw) {
         // asks for username, if not in list displays error message
