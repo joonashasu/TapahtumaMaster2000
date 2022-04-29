@@ -60,7 +60,7 @@ public class SavedEventsScreen extends AppCompatActivity {
 
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
             //credentials.credentialLoader(sharedPreferencesMap);
-             currentUserName = sharedPreferences.getString("LoginUsername", "");
+             currentUserName = sharedPreferences.getString("lastLoginUsername", "");
         }
 
         showListedEvents(currentUserName);

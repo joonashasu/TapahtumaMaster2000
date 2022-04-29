@@ -30,7 +30,7 @@ public class Calendar {
             //help gotten from https://stackoverflow.com/questions/5800603/delete-specific-line-from-java-text-file
             System.out.println(context.getFilesDir()+"/"+un+".txt");
             File inputFile = new File(context.getFilesDir()+"/"+un+".txt");
-
+            System.out.println("Date:"+date);
             BufferedReader reader = new BufferedReader(new FileReader(inputFile));
             String s = "";
             while ((s=reader.readLine())!=null) {
@@ -38,7 +38,7 @@ public class Calendar {
                     String[] help = s.split(";");
                     s = help[1];
                     String helpString = help[3];
-                    eventsfordate = eventsfordate + s + " - " + helpString + "€";
+                    eventsfordate = (eventsfordate + s + " - " + helpString + "€\n");
                 }
             }
 

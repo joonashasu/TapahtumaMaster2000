@@ -132,19 +132,19 @@ public class EventScreen extends AppCompatActivity {
         Event event = (Event) i.getSerializableExtra("sample");
         User u = new User();
         String cm = comment.getText().toString();
-        String currentUserName = "jorma";
+        String currentUserName = "";
         if (sharedPreferences != null) {
 
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
             //credentials.credentialLoader(sharedPreferencesMap);
-            currentUserName = sharedPreferences.getString("LoginUsername", "");
+            currentUserName = sharedPreferences.getString("lastLoginUsername", "");
         }
         try {
             String user = currentUserName;
             String fileName = user+".txt";
             System.out.println("/////////////"+user);
             OutputStreamWriter ow = new OutputStreamWriter(context.openFileOutput(fileName, MODE_APPEND));
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.mm.yyyy");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             String date = textViewDate.getText().toString();
             if(date.equals("")){
                 LocalDateTime now = LocalDateTime.now();
