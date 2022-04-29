@@ -39,8 +39,12 @@ public class ProfileScreen extends AppCompatActivity {
     private NavigationView nvDrawer;
 
     public Credentials credentials;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor sharedPreferencesEditor;
+    SharedPreferences credentialsSharedPreferences;
+    SharedPreferences locationSharedPreferences;
+    SharedPreferences NameSharedPreferences;
+    SharedPreferences.Editor credentialsSharedPreferencesEditor;
+    SharedPreferences.Editor locationSharedPreferencesEditor;
+    SharedPreferences.Editor NameSharedPreferencesEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,17 +90,21 @@ public class ProfileScreen extends AppCompatActivity {
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
-        sharedPreferencesEditor = sharedPreferences.edit();
+        credentialsSharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
+        locationSharedPreferences = getApplicationContext().getSharedPreferences("LocationDataBase", MODE_PRIVATE);
+        NameSharedPreferences = getApplicationContext().getSharedPreferences("NameDataBase", MODE_PRIVATE);
+        credentialsSharedPreferencesEditor = credentialsSharedPreferences.edit();
+        locationSharedPreferencesEditor = locationSharedPreferences.edit();
+        NameSharedPreferencesEditor = NameSharedPreferences.edit();
 
-        if(sharedPreferences != null){
+        if(credentialsSharedPreferences != null){
 
-            Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
+            Map<String, ?> sharedPreferencesMap = credentialsSharedPreferences.getAll();
             credentials.credentialLoader(sharedPreferencesMap);
 
-            username = sharedPreferences.getString("LoginUsername", "");
-            name = sharedPreferences.getString(credentials.nameLoader(username), "");
-            location = sharedPreferences.getString(credentials.locationLoader(username), "");
+            username = credentialsSharedPreferences.getString("lastLoginUsername", "");
+            location = locationSharedPreferences.getString("lastLoginLocation", "");
+            name = NameSharedPreferences.getString("lastLoginName", "");
 
             tName.setText(name);
             tUsername.setText(username);
@@ -110,20 +118,20 @@ public class ProfileScreen extends AppCompatActivity {
                 etPassword1 = (EditText) findViewById(R.id.etPassword1);
                 etPassword2 = (EditText) findViewById(R.id.etPassword2);
 
-                if(sharedPreferences != null) {
-                    Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
+                if(credentialsSharedPreferences != null) {
+                    Map<String, ?> sharedPreferencesMap = credentialsSharedPreferences.getAll();
                     credentials.credentialLoader(sharedPreferencesMap);
                 }
 
-                String username = sharedPreferences.getString("LoginUsername", "");
-                String oldPassword = sharedPreferences.getString("LoginPassword", "");
+                String username = credentialsSharedPreferences.getString("lastLoginUsername", "");
+                String oldPassword = credentialsSharedPreferences.getString("lastLoginPassword", "");
                 String newPassword1 = etPassword1.getText().toString();
                 String newPassword2 = etPassword2.getText().toString();
 
                 if(newPassword1.equals(newPassword2) && !newPassword1.equals(oldPassword)){
                     Toast.makeText(ProfileScreen.this, "Passwords changed successfully", Toast.LENGTH_SHORT).show();
-                    sharedPreferencesEditor.putString(username, newPassword1);
-                    sharedPreferencesEditor.apply();
+                    credentialsSharedPreferencesEditor.putString(username, newPassword1);
+                    credentialsSharedPreferencesEditor.apply();
                 }else if (newPassword1.equals(newPassword2) && newPassword1.equals(oldPassword)) {
                     Toast.makeText(ProfileScreen.this, "Passwords already in use", Toast.LENGTH_SHORT).show();
                 }else{
@@ -138,10 +146,11 @@ public class ProfileScreen extends AppCompatActivity {
                 etLocationChanger = (EditText) findViewById(R.id.etLocationChanger);
 
                 String newLocation = etLocationChanger.getText().toString();
+                String username = credentialsSharedPreferences.getString("lastLoginUsername", "");
 
                 Toast.makeText(ProfileScreen.this, "Location changed successfully", Toast.LENGTH_SHORT).show();
-                sharedPreferencesEditor.putString("LoginLocation", newLocation);
-                sharedPreferencesEditor.apply();
+                locationSharedPreferencesEditor.putString(username, newLocation);
+                locationSharedPreferencesEditor.apply();
             }
         });
     }

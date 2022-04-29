@@ -29,8 +29,13 @@ public class RegisterScreen extends AppCompatActivity {
 
     public Credentials credentials;
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor sharedPreferencesEditor;
+    SharedPreferences credentialsSharedPreferences;
+    SharedPreferences locationSharedPreferences;
+    SharedPreferences NameSharedPreferences;
+    SharedPreferences.Editor credentialsSharedPreferencesEditor;
+    SharedPreferences.Editor locationSharedPreferencesEditor;
+    SharedPreferences.Editor NameSharedPreferencesEditor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +50,16 @@ public class RegisterScreen extends AppCompatActivity {
         bRegister = (Button) findViewById(R.id.bRegister);
         ibBack = (ImageButton) findViewById((R.id.ibBack));
 
-        sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
-        sharedPreferencesEditor = sharedPreferences.edit();
+        credentialsSharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
+        locationSharedPreferences = getApplicationContext().getSharedPreferences("LocationDataBase", MODE_PRIVATE);
+        NameSharedPreferences = getApplicationContext().getSharedPreferences("NameDataBase", MODE_PRIVATE);
+        credentialsSharedPreferencesEditor = credentialsSharedPreferences.edit();
+        locationSharedPreferencesEditor = locationSharedPreferences.edit();
+        NameSharedPreferencesEditor = NameSharedPreferences.edit();
 
-        if(sharedPreferences != null){
+        if(credentialsSharedPreferences != null){
 
-            Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
+            Map<String, ?> sharedPreferencesMap = credentialsSharedPreferences.getAll();
 
             if(sharedPreferencesMap.size() != 0){
                 credentials.credentialLoader(sharedPreferencesMap);
@@ -78,13 +87,16 @@ public class RegisterScreen extends AppCompatActivity {
                     credentials.addName(inputUsername, inputName);
 
                     // Adding name, password and location to database
-                    sharedPreferencesEditor.putString(inputUsername, inputPassword);
-                    sharedPreferencesEditor.putString(inputUsername, inputLocation);
-                    sharedPreferencesEditor.putString(inputUsername, inputName);
+                    credentialsSharedPreferencesEditor.putString(inputUsername, inputPassword);
+                    locationSharedPreferencesEditor.putString(inputUsername, inputLocation);
+                    NameSharedPreferencesEditor.putString(inputUsername, inputName);
 
 
                     // Adding the new change to database
-                    sharedPreferencesEditor.apply();
+                    credentialsSharedPreferencesEditor.apply();
+                    locationSharedPreferencesEditor.apply();
+                    NameSharedPreferencesEditor.apply();
+
 
                     Intent intent = new Intent(RegisterScreen.this, StartScreen.class);
                     Toast.makeText(RegisterScreen.this, "Registration successful", Toast.LENGTH_SHORT).show();

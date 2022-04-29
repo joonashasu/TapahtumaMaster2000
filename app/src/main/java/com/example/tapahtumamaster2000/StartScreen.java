@@ -25,8 +25,12 @@ public class StartScreen extends AppCompatActivity {
     public Credentials credentials;
     public RegisterScreen register;
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor sharedPreferencesEditor;
+    SharedPreferences credentialsSharedPreferences;
+    SharedPreferences locationSharedPreferences;
+    SharedPreferences NameSharedPreferences;
+    SharedPreferences.Editor credentialsSharedPreferencesEditor;
+    SharedPreferences.Editor locationSharedPreferencesEditor;
+    SharedPreferences.Editor NameSharedPreferencesEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {    // Login to already existing account
@@ -38,14 +42,18 @@ public class StartScreen extends AppCompatActivity {
         bLogin = (Button) findViewById(R.id.bLogin);
         bRegister = (Button) findViewById(R.id.bLogin);
 
-        sharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
-        sharedPreferencesEditor = sharedPreferences.edit();
+        credentialsSharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
+        locationSharedPreferences = getApplicationContext().getSharedPreferences("LocationDataBase", MODE_PRIVATE);
+        NameSharedPreferences = getApplicationContext().getSharedPreferences("NameDataBase", MODE_PRIVATE);
+        credentialsSharedPreferencesEditor = credentialsSharedPreferences.edit();
+        locationSharedPreferencesEditor = locationSharedPreferences.edit();
+        NameSharedPreferencesEditor = NameSharedPreferences.edit();
 
         credentials = new Credentials();
 
-        if (sharedPreferences != null) {
+        if (credentialsSharedPreferences != null) {
 
-            Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
+            Map<String, ?> sharedPreferencesMap = credentialsSharedPreferences.getAll();
 
             if (sharedPreferencesMap.size() != 0) {
                 credentials.credentialLoader(sharedPreferencesMap);
@@ -66,12 +74,17 @@ public class StartScreen extends AppCompatActivity {
                     } else {
                         Toast.makeText(StartScreen.this, "Successful login", Toast.LENGTH_SHORT).show();
 
-                        sharedPreferencesEditor.putString("LoginUsername", username);
-                        sharedPreferencesEditor.putString("LoginPassword", password);
-                        sharedPreferencesEditor.putString("LoginLocation",  credentials.locationLoader(username));
-                        sharedPreferencesEditor.putString("LoginName", credentials.nameLoader(username));
+                        // Saving last logins
+                        credentialsSharedPreferencesEditor.putString("lastLoginUsername", username);
+                        credentialsSharedPreferencesEditor.putString("lastLoginPassword", password);
+                        locationSharedPreferencesEditor.putString("lastLoginLocation",  credentials.locationLoader(username));
+                        NameSharedPreferencesEditor.putString("lastLoginName", credentials.nameLoader(username));
 
-                        sharedPreferencesEditor.apply();
+                        // Adding the new change to database
+                        credentialsSharedPreferencesEditor.apply();
+                        locationSharedPreferencesEditor.apply();
+                        NameSharedPreferencesEditor.apply();
+
 
                         Intent intent = new Intent(StartScreen.this, BrowseScreen.class);
                         startActivity(intent);
