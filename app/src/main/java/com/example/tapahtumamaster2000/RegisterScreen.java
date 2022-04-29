@@ -103,14 +103,6 @@ public class RegisterScreen extends AppCompatActivity {
         });
     }
 
-    public EditText getEtLocation() {
-        return etLocation;
-    }
-
-    public EditText getEtName() {
-        return etName;
-    }
-
     private boolean CheckCredentials(String un, String pw) {
 
         boolean lowerCase = false;

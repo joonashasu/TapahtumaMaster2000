@@ -94,9 +94,9 @@ public class ProfileScreen extends AppCompatActivity {
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
             credentials.credentialLoader(sharedPreferencesMap);
 
-            name = sharedPreferences.getString("LoginName", "");
             username = sharedPreferences.getString("LoginUsername", "");
-            location = sharedPreferences.getString("LoginLocation", "");
+            name = sharedPreferences.getString(credentials.nameLoader(username), "");
+            location = sharedPreferences.getString(credentials.locationLoader(username), "");
 
             tName.setText(name);
             tUsername.setText(username);
