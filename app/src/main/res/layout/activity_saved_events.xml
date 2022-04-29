@@ -83,4 +83,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/commenttv" />
+
+    <Button
+        android:id="@+id/calendarButton"
+        android:layout_width="349dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="81dp"
+        android:onClick="goToCalendar"
+        android:text="Go to Calendar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/moneyUsed"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

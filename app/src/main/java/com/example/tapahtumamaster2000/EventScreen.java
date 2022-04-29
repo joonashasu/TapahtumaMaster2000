@@ -23,6 +23,9 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
 
 public class EventScreen extends AppCompatActivity {
@@ -31,6 +34,7 @@ public class EventScreen extends AppCompatActivity {
     TextView eventName;
     TextView eventLocation;
     TextView eventPrice;
+    TextView textViewDate;
     TextInputEditText comment;
     private DrawerLayout mDrawer;
     private androidx.appcompat.widget.Toolbar toolbar;
@@ -38,6 +42,8 @@ public class EventScreen extends AppCompatActivity {
     Context context = null;
     SharedPreferences sharedPreferences;
     public Credentials credentials;
+    Date current = new Date();
+
 
 
 
@@ -63,6 +69,7 @@ public class EventScreen extends AppCompatActivity {
         eventLocation = (TextView) findViewById(R.id.eventLocation);
         eventPrice = (TextView) findViewById(R.id.eventPrice);
         descScrollView.removeAllViews();
+        textViewDate = (TextView) findViewById(R.id.editTextDate);
         Intent i = getIntent();
         Event event = (Event) i.getSerializableExtra("sample");
         tv = new TextView(this);
@@ -75,6 +82,7 @@ public class EventScreen extends AppCompatActivity {
         eventLocation.setText(locationString);
         String priceString = "Price: "+event.price;
         eventPrice.setText(priceString);
+
 
 
         comment.setOnKeyListener(new View.OnKeyListener() {
@@ -101,6 +109,7 @@ public class EventScreen extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu();
+
             }
 
             @Override
@@ -135,6 +144,13 @@ public class EventScreen extends AppCompatActivity {
             String fileName = user+".txt";
             System.out.println("/////////////"+user);
             OutputStreamWriter ow = new OutputStreamWriter(context.openFileOutput(fileName, MODE_APPEND));
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.mm.yyyy");
+            String date = textViewDate.getText().toString();
+            if(date.equals("")){
+                LocalDateTime now = LocalDateTime.now();
+                date = dtf.format(now);
+            }
+
             if (cm.equals("")){
                 cm = "No comment added";
             }
@@ -145,7 +161,7 @@ public class EventScreen extends AppCompatActivity {
                 price = "0";
             }
 
-            String s = event.ID + ";" + event.name + ";" + cm+";"+price+"\n";
+            String s = event.ID + ";" + event.name + ";" + cm+";"+price+";"+date+"\n";
             System.out.println(s);
             ow.append(s);
             ow.close();
