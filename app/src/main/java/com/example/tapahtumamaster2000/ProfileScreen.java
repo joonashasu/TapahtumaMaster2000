@@ -99,8 +99,9 @@ public class ProfileScreen extends AppCompatActivity {
 
         if(credentialsSharedPreferences != null){
 
-            Map<String, ?> sharedPreferencesMap = credentialsSharedPreferences.getAll();
-            credentials.credentialLoader(sharedPreferencesMap);
+            credentialsSharedPreferences.getAll();
+            locationSharedPreferences.getAll();
+            NameSharedPreferences.getAll();
 
             username = credentialsSharedPreferences.getString("lastLoginUsername", "");
             location = locationSharedPreferences.getString("lastLoginLocation", "");
