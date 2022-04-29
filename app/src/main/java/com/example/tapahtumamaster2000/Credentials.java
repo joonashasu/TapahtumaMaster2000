@@ -42,15 +42,11 @@ public class Credentials{
         }
     }
 
-    public void locationLoader(Map<String, ?> locationMap ) {
-        for(Map.Entry<String, ?> entries: locationMap.entrySet()){
-            locationsHashmap.put(entries.getKey(), entries.getValue().toString());
-        }
+    public String locationLoader(String username) {
+            return locationsHashmap.get(username);
     }
 
-    public void nameLoader(Map<String, ?> locationMap ) {
-        for(Map.Entry<String, ?> entries: locationMap.entrySet()){
-            nameHashmap.put(entries.getKey(), entries.getValue().toString());
-        }
+    public String nameLoader(String username) {
+        return nameHashmap.get(username);
     }
 }

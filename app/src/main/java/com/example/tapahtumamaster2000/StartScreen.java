@@ -68,8 +68,8 @@ public class StartScreen extends AppCompatActivity {
 
                         sharedPreferencesEditor.putString("LoginUsername", username);
                         sharedPreferencesEditor.putString("LoginPassword", password);
-                        //sharedPreferencesEditor.putString("LoginLocation", register.getEtLocation().toString());
-                        //sharedPreferencesEditor.putString("LoginName", register.getEtName().toString());
+                        sharedPreferencesEditor.putString("LoginLocation",  credentials.locationLoader(username));
+                        sharedPreferencesEditor.putString("LoginName", credentials.nameLoader(username));
 
                         sharedPreferencesEditor.apply();
 

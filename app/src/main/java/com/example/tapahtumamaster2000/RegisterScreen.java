@@ -74,12 +74,14 @@ public class RegisterScreen extends AppCompatActivity {
 
                     // Adding inputs to hashmaps
                     credentials.addUser(inputUsername, inputPassword);
+                    credentials.addLocation(inputUsername, inputLocation);
+                    credentials.addName(inputUsername, inputName);
 
                     // Adding name, password and location to database
                     sharedPreferencesEditor.putString(inputUsername, inputPassword);
-                    sharedPreferencesEditor.putString("LoginUsername", inputUsername);
-                    sharedPreferencesEditor.putString("LoginLocation", inputLocation);
-                    sharedPreferencesEditor.putString("LoginName", inputName);
+                    sharedPreferencesEditor.putString(inputUsername, inputLocation);
+                    sharedPreferencesEditor.putString(inputUsername, inputName);
+
 
                     // Adding the new change to database
                     sharedPreferencesEditor.apply();
