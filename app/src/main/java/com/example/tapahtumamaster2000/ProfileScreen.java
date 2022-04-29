@@ -104,8 +104,8 @@ public class ProfileScreen extends AppCompatActivity {
             NameSharedPreferences.getAll();
 
             username = credentialsSharedPreferences.getString("lastLoginUsername", "");
-            location = locationSharedPreferences.getString("lastLoginLocation", "");
-            name = NameSharedPreferences.getString("lastLoginName", "");
+            location = locationSharedPreferences.getString(username, "");
+            name = NameSharedPreferences.getString(username, "");
 
             tName.setText(name);
             tUsername.setText(username);
@@ -121,7 +121,7 @@ public class ProfileScreen extends AppCompatActivity {
 
                 if(credentialsSharedPreferences != null) {
                     Map<String, ?> sharedPreferencesMap = credentialsSharedPreferences.getAll();
-                    credentials.credentialLoader(sharedPreferencesMap);
+                    //credentials.credentialLoader(sharedPreferencesMap);
                 }
 
                 String username = credentialsSharedPreferences.getString("lastLoginUsername", "");

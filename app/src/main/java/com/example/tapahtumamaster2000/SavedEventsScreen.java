@@ -164,7 +164,7 @@ public class SavedEventsScreen extends AppCompatActivity {
         return context;
     }
 
-    public void goToCalendar(){
+    public void goToCalendar(View v){
         Intent intent1 = new Intent(SavedEventsScreen.this, CalendarScreen.class);
         startActivity(intent1);
     }

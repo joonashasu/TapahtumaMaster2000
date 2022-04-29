@@ -43,10 +43,10 @@ public class Credentials{
     }
 
     public String locationLoader(String username) {
-            return locationsHashmap.get(username);
+            return locationsHashmap.get(username+"loc");
     }
 
     public String nameLoader(String username) {
-        return nameHashmap.get(username);
+        return nameHashmap.get(username+"realName");
     }
 }
