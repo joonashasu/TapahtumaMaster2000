@@ -19,11 +19,9 @@ public class StartScreen extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button bLogin;
-    private Button bRegister;
 
     boolean validation = false;
     public Credentials credentials;
-    public RegisterScreen register;
 
     SharedPreferences credentialsSharedPreferences;
     SharedPreferences locationSharedPreferences;
@@ -33,15 +31,15 @@ public class StartScreen extends AppCompatActivity {
     SharedPreferences.Editor NameSharedPreferencesEditor;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {    // Login to already existing account
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
 
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         bLogin = (Button) findViewById(R.id.bLogin);
-        bRegister = (Button) findViewById(R.id.bLogin);
 
+        // Creating SharedPreferences and their editors
         credentialsSharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
         locationSharedPreferences = getApplicationContext().getSharedPreferences("LocationDataBase", MODE_PRIVATE);
         NameSharedPreferences = getApplicationContext().getSharedPreferences("NameDataBase", MODE_PRIVATE);
@@ -51,6 +49,7 @@ public class StartScreen extends AppCompatActivity {
 
         credentials = new Credentials();
 
+        //  Checking that credentialsSharedPreferences is not empty
         if (credentialsSharedPreferences != null) {
 
             Map<String, ?> sharedPreferencesMap = credentialsSharedPreferences.getAll();
@@ -68,19 +67,20 @@ public class StartScreen extends AppCompatActivity {
                 if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(StartScreen.this, "Please provide both a username and a password", Toast.LENGTH_SHORT).show();
                 } else {
+                    // Checking that username and password match
                     validation = CheckCredentials(username, password);
                     if (!validation) {
                         Toast.makeText(StartScreen.this, "Wrong username or password", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(StartScreen.this, "Successful login", Toast.LENGTH_SHORT).show();
 
-                        // Saving last logins
+                        // Saving last logins for profile screen
                         credentialsSharedPreferencesEditor.putString("lastLoginUsername", username);
                         credentialsSharedPreferencesEditor.putString("lastLoginPassword", password);
                         locationSharedPreferencesEditor.putString("lastLoginLocation",  credentials.locationLoader(username));
                         NameSharedPreferencesEditor.putString("lastLoginName", credentials.nameLoader(username));
 
-                        // Adding the new change to database
+                        // Adding the new change to databases
                         credentialsSharedPreferencesEditor.apply();
                         locationSharedPreferencesEditor.apply();
                         NameSharedPreferencesEditor.apply();
@@ -94,6 +94,9 @@ public class StartScreen extends AppCompatActivity {
         });
     }
 }
+
+    // Takes in username and password, compares them in credentials and returns true/false
+    // depending on the if the credentials match
     private boolean CheckCredentials (String username, String password){
             return credentials.CheckCredentials(username, password);
         }

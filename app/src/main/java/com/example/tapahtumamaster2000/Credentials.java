@@ -1,6 +1,5 @@
 package com.example.tapahtumamaster2000;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +17,7 @@ public class Credentials{
     public void addLocation(String username, String location){
         locationsHashmap.put(username, location);
     }
+
     public void addName(String username, String name){
         locationsHashmap.put(username, name);
     }
@@ -26,6 +26,8 @@ public class Credentials{
         return credentialsHashmap.containsKey(username);
     }
 
+    // Takes in username and password, compares them and returns true/false
+    // depending on the if the credentials match
     public boolean CheckCredentials(String username, String password){
 
         if(credentialsHashmap.containsKey(username)){
@@ -36,6 +38,7 @@ public class Credentials{
         return false;
     }
 
+    // Loads credentials from credentials hashmap with (username, password) as (key, value)
     public void credentialLoader (Map<String, ?> preferencesMap){
         for(Map.Entry<String, ?> entries: preferencesMap.entrySet()){
             credentialsHashmap.put(entries.getKey(), entries.getValue().toString());

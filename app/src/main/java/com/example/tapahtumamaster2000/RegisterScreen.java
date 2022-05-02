@@ -11,9 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.material.progressindicator.BaseProgressIndicator;
-
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,6 +47,7 @@ public class RegisterScreen extends AppCompatActivity {
         bRegister = (Button) findViewById(R.id.bRegister);
         ibBack = (ImageButton) findViewById((R.id.ibBack));
 
+        // Creating SharedPreferences and their editors
         credentialsSharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
         locationSharedPreferences = getApplicationContext().getSharedPreferences("LocationDataBase", MODE_PRIVATE);
         NameSharedPreferences = getApplicationContext().getSharedPreferences("NameDataBase", MODE_PRIVATE);
@@ -57,6 +55,7 @@ public class RegisterScreen extends AppCompatActivity {
         locationSharedPreferencesEditor = locationSharedPreferences.edit();
         NameSharedPreferencesEditor = NameSharedPreferences.edit();
 
+        //  Checking that credentialsSharedPreferences is not empty
         if(credentialsSharedPreferences != null){
 
             Map<String, ?> sharedPreferencesMap = credentialsSharedPreferences.getAll();
@@ -75,32 +74,33 @@ public class RegisterScreen extends AppCompatActivity {
                 String inputPassword = etPassword.getText().toString();
                 String inputLocation = etLocation.getText().toString();
 
-                if(CheckCredentials(inputUsername,inputPassword)){
+                // Checking that username is not already in use
+                if(credentials.CheckUsername(inputUsername)){
+                    Toast.makeText(RegisterScreen.this, "Username already in use, please chose another one.", Toast.LENGTH_SHORT).show();
+                }else{
+                    // Checking the password meets the requirements and add new information to account
+                    if(checkPassword(inputPassword)) {
 
-                    if(credentials.CheckUsername(inputUsername)){
-                        Toast.makeText(RegisterScreen.this, "Username already in use, please chose another one.", Toast.LENGTH_SHORT).show();
-                    }else{
+                        // Adding inputs to hashmaps
+                        credentials.addUser(inputUsername, inputPassword);
+                        credentials.addLocation(inputUsername, inputLocation);
+                        credentials.addName(inputUsername, inputName);
 
-                    // Adding inputs to hashmaps
-                    credentials.addUser(inputUsername, inputPassword);
-                    credentials.addLocation(inputUsername, inputLocation);
-                    credentials.addName(inputUsername, inputName);
-
-                    // Adding name, password and location to database
-                    credentialsSharedPreferencesEditor.putString(inputUsername, inputPassword);
-                    locationSharedPreferencesEditor.putString(inputUsername, inputLocation);
-                    NameSharedPreferencesEditor.putString(inputUsername, inputName);
-
-
-                    // Adding the new change to database
-                    credentialsSharedPreferencesEditor.apply();
-                    locationSharedPreferencesEditor.apply();
-                    NameSharedPreferencesEditor.apply();
+                        // Adding name, password and location to database
+                        credentialsSharedPreferencesEditor.putString(inputUsername, inputPassword);
+                        locationSharedPreferencesEditor.putString(inputUsername, inputLocation);
+                        NameSharedPreferencesEditor.putString(inputUsername, inputName);
 
 
-                    Intent intent = new Intent(RegisterScreen.this, StartScreen.class);
-                    Toast.makeText(RegisterScreen.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
+                        // Adding the new change to database
+                        credentialsSharedPreferencesEditor.apply();
+                        locationSharedPreferencesEditor.apply();
+                        NameSharedPreferencesEditor.apply();
+
+
+                        Intent intent = new Intent(RegisterScreen.this, StartScreen.class);
+                        Toast.makeText(RegisterScreen.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
                     }
                 }
             }
@@ -115,7 +115,8 @@ public class RegisterScreen extends AppCompatActivity {
         });
     }
 
-    private boolean CheckCredentials(String un, String pw) {
+    // Takes in password and checks that it meets the requirements and returns true/false
+    public boolean checkPassword(String password) {
 
         boolean lowerCase = false;
         boolean UpperCase = false;
@@ -124,11 +125,11 @@ public class RegisterScreen extends AppCompatActivity {
 
         // Special character specifier
         Pattern p = Pattern.compile("[^A-Za-z0-9 ]");
-        Matcher m = p.matcher(pw);
+        Matcher m = p.matcher(password);
 
         // Goes through password characters by character and checks if it meets the
         // requirements
-        for (char i : pw.toCharArray()) {
+        for (char i : password.toCharArray()) {
             if (Character.isLowerCase(i))
                 lowerCase = true;
             if (Character.isUpperCase(i))
@@ -139,10 +140,10 @@ public class RegisterScreen extends AppCompatActivity {
                 specialCharacter = true;
         }
 
-        if (lowerCase && UpperCase && digit && specialCharacter && pw.length() > 12) {
+        if (lowerCase && UpperCase && digit && specialCharacter && password.length() > 12) {
             return true;
         } else {
-            Toast.makeText(RegisterScreen.this, "Enter username and a password that matches the following requirement:\n " +
+            Toast.makeText(RegisterScreen.this, "Enter username that is not in use and a password that matches the following requirement:\n " +
                     "Password: Lowercase, upper, digit, special character", Toast.LENGTH_SHORT).show();
             return false;
         }

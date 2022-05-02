@@ -30,7 +30,6 @@ public class ProfileScreen extends AppCompatActivity {
     private EditText etPassword1;
     private EditText etPassword2;
     private EditText etLocationChanger;
-    private Button bUploadImage;
     private Button bChangePassword;
     private Button bChangeLocation;
 
@@ -38,7 +37,8 @@ public class ProfileScreen extends AppCompatActivity {
     private androidx.appcompat.widget.Toolbar toolbar;
     private NavigationView nvDrawer;
 
-    public Credentials credentials;
+    RegisterScreen registerScreen;
+
     SharedPreferences credentialsSharedPreferences;
     SharedPreferences locationSharedPreferences;
     SharedPreferences NameSharedPreferences;
@@ -64,7 +64,6 @@ public class ProfileScreen extends AppCompatActivity {
         etPassword1 = (EditText) findViewById(R.id.etPassword1);
         etPassword2 = (EditText) findViewById(R.id.etPassword2);
         etLocationChanger = (EditText) findViewById(R.id.etLocationChanger);
-        bUploadImage = (Button) findViewById(R.id.bUploadImage);
         bChangePassword = (Button) findViewById(R.id.bChangePassword);
         bChangeLocation = (Button) findViewById(R.id.bChangeLocation);
         String name, username, location;
@@ -90,6 +89,7 @@ public class ProfileScreen extends AppCompatActivity {
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        // Creating SharedPreferences folders for credentials, locations and users real names
         credentialsSharedPreferences = getApplicationContext().getSharedPreferences("CredentialsDataBase", MODE_PRIVATE);
         locationSharedPreferences = getApplicationContext().getSharedPreferences("LocationDataBase", MODE_PRIVATE);
         NameSharedPreferences = getApplicationContext().getSharedPreferences("NameDataBase", MODE_PRIVATE);
@@ -97,6 +97,8 @@ public class ProfileScreen extends AppCompatActivity {
         locationSharedPreferencesEditor = locationSharedPreferences.edit();
         NameSharedPreferencesEditor = NameSharedPreferences.edit();
 
+        // Checking that the credentialsSharedPreferences is not empty and selecting the
+        // appropriate information for the profile page
         if(credentialsSharedPreferences != null){
 
             credentialsSharedPreferences.getAll();
@@ -121,7 +123,6 @@ public class ProfileScreen extends AppCompatActivity {
 
                 if(credentialsSharedPreferences != null) {
                     Map<String, ?> sharedPreferencesMap = credentialsSharedPreferences.getAll();
-                    //credentials.credentialLoader(sharedPreferencesMap);
                 }
 
                 String username = credentialsSharedPreferences.getString("lastLoginUsername", "");
@@ -129,7 +130,9 @@ public class ProfileScreen extends AppCompatActivity {
                 String newPassword1 = etPassword1.getText().toString();
                 String newPassword2 = etPassword2.getText().toString();
 
-                if(newPassword1.equals(newPassword2) && !newPassword1.equals(oldPassword)){
+                // Checking that new passwords match, they aren't the same as the old one
+                // and that the new password meet the password requirements
+                if(newPassword1.equals(newPassword2) && !newPassword1.equals(oldPassword) && registerScreen.checkPassword(newPassword1)){
                     Toast.makeText(ProfileScreen.this, "Passwords changed successfully", Toast.LENGTH_SHORT).show();
                     credentialsSharedPreferencesEditor.putString(username, newPassword1);
                     credentialsSharedPreferencesEditor.apply();
@@ -165,6 +168,7 @@ public class ProfileScreen extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -192,7 +196,6 @@ public class ProfileScreen extends AppCompatActivity {
             default:
                 intent = new Intent(ProfileScreen.this, ProfileScreen.class);
         }
-
 
         startActivity(intent);
         menuItem.setChecked(true);
