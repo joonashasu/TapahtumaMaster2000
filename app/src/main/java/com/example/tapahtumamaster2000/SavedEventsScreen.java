@@ -57,18 +57,18 @@ public class SavedEventsScreen extends AppCompatActivity {
         String currentUserName = "";
 
         if (sharedPreferences != null) {
-
+            //gets username from logged in user (files named after it)
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
-            //credentials.credentialLoader(sharedPreferencesMap);
              currentUserName = sharedPreferences.getString("lastLoginUsername", "");
-        }
 
+        }
+        //shows events and total money cost on them on startup
         showListedEvents(currentUserName);
         System.out.println(totalcost);
         String money = "Your saved events cost a total of "+totalcost+"€.";
         moneyUsed.setText(money);
 
-
+        //shows event's comment when clicked on
         savedEventsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -81,13 +81,14 @@ public class SavedEventsScreen extends AppCompatActivity {
             }
         });
     }
+    //gets current username
     public String getcurrent(){
         String currentUserName = "";
 
         if (sharedPreferences != null) {
 
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
-            currentUserName = sharedPreferences.getString("LoginUsername", "");
+            currentUserName = sharedPreferences.getString("lastLoginUsername", "");
         }
         return currentUserName;
     }
@@ -109,6 +110,7 @@ public class SavedEventsScreen extends AppCompatActivity {
     }
 
     public void showListedEvents(String name){
+        //reads file, adds to array and populates listview
         ArrayList<String> list = new ArrayList<String>();
         Context context = this;
         String read = name+".txt";
@@ -145,6 +147,7 @@ public class SavedEventsScreen extends AppCompatActivity {
     }
 
     public void deleteEvent(View v){
+        //if an event is selected, deletes on button click
         String selectedString = getSelected();
 
         if (selectedString == ""){

@@ -51,16 +51,17 @@ public class Event implements Serializable {
     }
 
     public String getJSON() throws IOException {
+
+        //gets json file from myhelsinki open api
         Event[] list = null;
         String preresponse = null;
         String response = null;
-        //Gson gson = new Gson();
+
         String site = "https://open-api.myhelsinki.fi/v2/activities";
         URL url = new URL(site);
-        //URLConnection request = url.openConnection();
+
         HttpURLConnection http = (HttpURLConnection)url.openConnection();
-        //http.setRequestMethod("GET");
-        //http.setRequestProperty("-H ","accept: application/json");
+
         System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
         InputStream in = new BufferedInputStream(http.getInputStream());
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -73,23 +74,9 @@ public class Event implements Serializable {
         in.close();
         preresponse = sb.toString();
         response = preresponse.substring(31,preresponse.length());
-        //System.out.println(response);
-
-        //JsonElement root  = jp.parse(reader);
-        //JsonObject jOBJ = root.getAsJsonObject();
-        //System.out.println(jOBJ.toString());
-        //event.ID = jOBJ.get("id").getAsInt();
-
-        //
-
-        //event.ID = rootobj.get("id").getAsInt();
-        //event.name =
-        //event.
 
 
 
-
-        //System.out.println(event.ID);
 
         return response;
     }
@@ -98,7 +85,7 @@ public class Event implements Serializable {
 
         if (json != null){
             try{
-                //searches through the json and appends event objects to array
+                //searches through the json and appends event objects to arraylist
                 JSONArray jsonArray = new JSONArray(json);
                 for(int i = 0; i<jsonArray.length();i++){
                     Event event = new Event();
@@ -118,25 +105,14 @@ public class Event implements Serializable {
 
                     JSONObject venueHelp = (JSONObject) jObj.get("address");
                     venue.location = (venueHelp.get("streetName")+", "+venueHelp.get("postalCode")+" "+venueHelp.get("city")).toString();
-                    //venueHelp = (JSONObject) venueHelp.getJSONObject("location");
-                    //if ((venueHelp.get("location")!="null") && venueHelp.get("location")!= null){
-                    //    venue.locationLat = venueHelp.get("lat").toString();
-                    //    venue.locationLong = venueHelp.get("long").toString();
-                    //} else{
-                    //    venue.locationLat ="null";
-                    //    venue.locationLong ="null";
-                    //}
+
                     event.venue = venue;
 
                     String urlHelp = jObj.get("siteUrl").toString();
                     event.url = new URL(urlHelp);
 
-                    //event.name = jObj.get("descriptions").toString();
-                    //System.out.println("//////////////////////////////");
+
                     allEvents.add(event);
-                    //System.out.println(event.ID+" "+event.name+" "+event.duration+" "+event.price+" "+event.venue.location+" ");
-                    //System.out.println(event.description);
-                    //System.out.println(event.url.toString());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -151,11 +127,8 @@ public class Event implements Serializable {
 
 
 
-    //public Date getDuration(Event e){
 
-        //return
-    //}
-    public String formatDetails(Event e){
+    public String formatDetails(Event e){ //gets details of event to be previewed
         String formatted = (e.name+"\n"
                 +"Location: "+e.venue.location+"\n"
                 +"Price: "+e.price+"\n"

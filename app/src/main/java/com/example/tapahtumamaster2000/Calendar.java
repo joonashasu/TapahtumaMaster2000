@@ -23,7 +23,7 @@ public class Calendar {
 
 
     public String displayCalendar(Context context, String un, String date){
-
+        //returns events that are on said day
 
         String eventsfordate = "";
         try {

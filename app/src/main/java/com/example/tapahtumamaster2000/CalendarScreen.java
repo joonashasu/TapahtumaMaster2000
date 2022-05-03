@@ -37,13 +37,18 @@ public class CalendarScreen extends AppCompatActivity {
         System.out.println(un);
         Context context = this;
 
+        //sets date format & current date
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDateTime now = LocalDateTime.now();
         String date = dtf.format(now);
 
+
+        //displays current date's events on startup
         String displayed = calendar.displayCalendar(context,un,date);
         tvEvent.setText(displayed);
 
+
+        //displays selected date's events when clicked on
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
@@ -63,6 +68,7 @@ public class CalendarScreen extends AppCompatActivity {
                 }
                 String year = String.valueOf(i);
                 String date = day + "." + month + "." + year;
+                System.out.println(date);
 
                 String displayed = calendar.displayCalendar(context,un,date);
                 tvEvent.setText(displayed);

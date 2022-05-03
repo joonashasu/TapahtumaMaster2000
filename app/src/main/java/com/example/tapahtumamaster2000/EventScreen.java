@@ -53,6 +53,8 @@ public class EventScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_screen);
 
+
+        //toolbar, help gotten from https://guides.codepath.com/android/fragment-navigation-drawer
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -84,7 +86,7 @@ public class EventScreen extends AppCompatActivity {
         eventPrice.setText(priceString);
 
 
-
+        //Saves event on enter click
         comment.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
@@ -97,7 +99,7 @@ public class EventScreen extends AppCompatActivity {
             }
         });
 
-
+        //taskbar/sidemenu icon setting
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, toolbar, R.string.home_navigation_drawer_open, R.string.home_navigation_drawer_close) {
 
@@ -122,12 +124,12 @@ public class EventScreen extends AppCompatActivity {
 
     }
 
-    public void goBack(View v){
+    public void goBack(View v){ //to browse screen
         Intent intent1 = new Intent(EventScreen.this, BrowseScreen.class);
         startActivity(intent1);
     }
 
-    public void saveEvent(View v){
+    public void saveEvent(View v){ //saves event to a file
         Intent i = getIntent();
         Event event = (Event) i.getSerializableExtra("sample");
         User u = new User();
@@ -136,8 +138,9 @@ public class EventScreen extends AppCompatActivity {
         if (sharedPreferences != null) {
 
             Map<String, ?> sharedPreferencesMap = sharedPreferences.getAll();
-            //credentials.credentialLoader(sharedPreferencesMap);
             currentUserName = sharedPreferences.getString("lastLoginUsername", "");
+
+            //gets username -> event is saved on "username.txt" file
         }
         try {
             String user = currentUserName;
@@ -157,11 +160,11 @@ public class EventScreen extends AppCompatActivity {
             String price;
             String[] priceHelp = event.price.split("-");
             price = priceHelp[1].replace("€", "");
-            if(price.equals("null")){
+            if(price.equals("null")){ //prevents from getting null errors in calculations/reading
                 price = "0";
             }
 
-            String s = event.ID + ";" + event.name + ";" + cm+";"+price+";"+date+"\n";
+            String s = event.ID + ";" + event.name + ";" + cm+";"+price+";"+date+"\n"; //saves event with these on a new line on said file
             System.out.println(s);
             ow.append(s);
             ow.close();
@@ -173,7 +176,7 @@ public class EventScreen extends AppCompatActivity {
 
     }
 
-
+    //toolbar functions
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

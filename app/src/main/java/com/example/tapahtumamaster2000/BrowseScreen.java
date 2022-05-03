@@ -62,6 +62,7 @@ public class BrowseScreen extends AppCompatActivity {
 
 
         //Toolbar functions under here:
+        //help from https://guides.codepath.com/android/fragment-navigation-drawer
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -124,6 +125,7 @@ public class BrowseScreen extends AppCompatActivity {
 
         eventDetails = (TextView) findViewById(R.id.eventDetails);
 
+        //when user inputs search to searchbar, returns events that match criteria
         SV.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -153,7 +155,7 @@ public class BrowseScreen extends AppCompatActivity {
         });
 
 
-
+        //displays short info to box when clicked on an event
         eventList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -250,7 +252,7 @@ public class BrowseScreen extends AppCompatActivity {
 
     }
 
-
+    //returns the event object that is clicked on
     public Event getChosenEvent(){
         Event event = null;
         String helpString = eventDetails.getText().toString();
@@ -272,6 +274,7 @@ public class BrowseScreen extends AppCompatActivity {
     }
 
     public void goToEvent(View v){
+        //enters event screen, takes the selected event there also
         Intent intent1 = new Intent(BrowseScreen.this, EventScreen.class);
         Event selected = getChosenEvent();
         intent1.putExtra("sample", selected);

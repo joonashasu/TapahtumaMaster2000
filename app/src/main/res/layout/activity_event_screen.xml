@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="150dp"
             android:ems="10"
+            android:hint="dd.MM.yyyy"
             android:inputType="date"
             app:layout_constraintBottom_toTopOf="@+id/eventName"
             app:layout_constraintEnd_toEndOf="parent"
